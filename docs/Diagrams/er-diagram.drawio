@@ -1,0 +1,57 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Blood Suite ER Diagram">
+    <mxGraphModel dx="1426" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <!-- User Entity -->
+        <mxCell id="user" value="&lt;b&gt;User&lt;/b&gt;&lt;br&gt;user_id (PK)&lt;br&gt;email (UNIQUE)&lt;br&gt;password_hash&lt;br&gt;role&lt;br&gt;created_at&lt;br&gt;last_login" style="shape=table;startSize=30;container=1;collapsible=0;dropTarget=0;align=center;size=20;fillColor=#f5f5f5;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="100" y="200" width="160" height="160" as="geometry"/>
+        </mxCell>
+        <!-- Donor Entity -->
+        <mxCell id="donor" value="&lt;b&gt;Donor&lt;/b&gt;&lt;br&gt;donor_id (PK, FK)&lt;br&gt;full_name&lt;br&gt;blood_type&lt;br&gt;phone&lt;br&gt;location&lt;br&gt;last_donation_date&lt;br&gt;is_available" style="shape=table;startSize=30;container=1;collapsible=0;dropTarget=0;align=center;size=20;fillColor=#e1f5fe;strokeColor=#01579b;" vertex="1" parent="1">
+          <mxGeometry x="320" y="100" width="160" height="180" as="geometry"/>
+        </mxCell>
+        <!-- Hospital Entity -->
+        <mxCell id="hospital" value="&lt;b&gt;Hospital&lt;/b&gt;&lt;br&gt;hospital_id (PK, FK)&lt;br&gt;name&lt;br&gt;address&lt;br&gt;phone&lt;br&gt;location&lt;br&gt;license_number" style="shape=table;startSize=30;container=1;collapsible=0;dropTarget=0;align=center;size=20;fillColor=#f3e5f5;strokeColor=#4a148c;" vertex="1" parent="1">
+          <mxGeometry x="320" y="300" width="160" height="150" as="geometry"/>
+        </mxCell>
+        <!-- BloodInventory Entity -->
+        <mxCell id="inventory" value="&lt;b&gt;BloodInventory&lt;/b&gt;&lt;br&gt;unit_id (PK)&lt;br&gt;hospital_id (FK)&lt;br&gt;donor_id (FK)&lt;br&gt;blood_type&lt;br&gt;quantity_ml&lt;br&gt;expiry_date&lt;br&gt;status" style="shape=table;startSize=30;container=1;collapsible=0;dropTarget=0;align=center;size=20;fillColor=#e8f5e8;strokeColor=#1b5e20;" vertex="1" parent="1">
+          <mxGeometry x="550" y="200" width="160" height="170" as="geometry"/>
+        </mxCell>
+        <!-- Donation Entity -->
+        <mxCell id="donation" value="&lt;b&gt;Donation&lt;/b&gt;&lt;br&gt;donation_id (PK)&lt;br&gt;donor_id (FK)&lt;br&gt;hospital_id (FK)&lt;br&gt;blood_type&lt;br&gt;quantity_donated&lt;br&gt;donation_date&lt;br&gt;next_eligible_date" style="shape=table;startSize=30;container=1;collapsible=0;dropTarget=0;align=center;size=20;fillColor=#fff3e0;strokeColor=#e65100;" vertex="1" parent="1">
+          <mxGeometry x="100" y="400" width="160" height="170" as="geometry"/>
+        </mxCell>
+        <!-- Request Entity -->
+        <mxCell id="request" value="&lt;b&gt;Request&lt;/b&gt;&lt;br&gt;request_id (PK)&lt;br&gt;hospital_id (FK)&lt;br&gt;blood_type&lt;br&gt;quantity_needed&lt;br&gt;urgency&lt;br&gt;status&lt;br&gt;created_at" style="shape=table;startSize=30;container=1;collapsible=0;dropTarget=0;align=center;size=20;fillColor=#ffebee;strokeColor=#b71c1c;" vertex="1" parent="1">
+          <mxGeometry x="550" y="400" width="160" height="170" as="geometry"/>
+        </mxCell>
+        <!-- Notification Entity -->
+        <mxCell id="notification" value="&lt;b&gt;Notification&lt;/b&gt;&lt;br&gt;notification_id (PK)&lt;br&gt;user_id (FK)&lt;br&gt;type&lt;br&gt;message&lt;br&gt;is_read&lt;br&gt;created_at" style="shape=table;startSize=30;container=1;collapsible=0;dropTarget=0;align=center;size=20;fillColor=#fce4ec;strokeColor=#880e4f;" vertex="1" parent="1">
+          <mxGeometry x="320" y="500" width="160" height="150" as="geometry"/>
+        </mxCell>
+        <!-- Relationships -->
+        <mxCell id="rel1" value="1:1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;entryX=0;entryY=0.5;" edge="1" parent="1" source="user" target="donor">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="rel2" value="1:1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;entryX=0;entryY=0.5;" edge="1" parent="1" source="user" target="hospital">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="rel3" value="1:N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" edge="1" parent="1" source="hospital" target="inventory">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="rel4" value="1:N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" edge="1" parent="1" source="donor" target="donation">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="rel5" value="1:N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" edge="1" parent="1" source="hospital" target="request">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="rel6" value="1:N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" edge="1" parent="1" source="user" target="notification">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
