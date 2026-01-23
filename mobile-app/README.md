@@ -1,2 +1,2 @@
 # Mobile App Module 
-This directory contains the donor mobile application built with Flutter. 
+## Tech Stack: Flutter, Dart, Firebase 
