@@ -1,0 +1,19 @@
+{
+  "name": "blood-suite",
+  "version": "1.0.0",
+  "description": "A smart blood bank and donor management system - Final Year Project",
+  "main": "server.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": ["blood-bank", "healthcare", "lesotho"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
