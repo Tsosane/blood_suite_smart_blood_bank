@@ -36,7 +36,7 @@ router.get('/', authenticateToken, async (req, res) => {
   }
 });
 
-router.get('/summary', authenticateToken, async (req, res) => {
+router.get('/summary', async (req, res) => {
   try {
     const summary = await pool.query(`
       SELECT 

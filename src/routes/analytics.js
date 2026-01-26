@@ -3,7 +3,7 @@ const router = express.Router();
 const pool = require('../config/database');
 const { authenticateToken, authorizeRoles } = require('../middleware/auth');
 
-router.get('/dashboard', authenticateToken, async (req, res) => {
+router.get('/dashboard', async (req, res) => {
   try {
     const totalDonors = await pool.query('SELECT COUNT(*) FROM donors');
     const totalHospitals = await pool.query('SELECT COUNT(*) FROM hospitals WHERE is_verified = true');
