@@ -10,10 +10,19 @@
     "start": "node server.js",
     "dev": "node server.js"
   },
-  "keywords": ["blood-bank", "healthcare", "lesotho"],
+  "keywords": [
+    "blood-bank",
+    "healthcare",
+    "lesotho"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^5.2.1"
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.6",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "pg": "^8.17.2"
   }
 }
