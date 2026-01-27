@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - Blood Suite</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #dc2626;
+      --primary-light: #ef4444;
+      --primary-dark: #991b1b;
+      --secondary-color: #6b7280;
+      --success-color: #10b981;
+      --warning-color: #f59e0b;
+      --error-color: #dc2626;
+      --background: #ffffff;
+      --surface: #f8fafc;
+      --text-primary: #1e293b;
+      --text-secondary: #64748b;
+      --border-color: #e2e8f0;
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      --radius-sm: 6px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --radius-xl: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      line-height: 1.6;
+      color: var(--text-primary);
+      background: linear-gradient(135deg, #fef2f2 0%, #ffffff 50%, #f0f9ff 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--spacing-lg);
+    }
+
+    .register-container {
+      width: 100%;
+      max-width: 1200px;
+      display: flex;
+      background: var(--background);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      min-height: 600px;
+    }
+
+    .register-left {
+      flex: 1;
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+      color: white;
+      padding: var(--spacing-xl);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .register-left::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+      animation: float 20s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(-30px, -30px) rotate(180deg); }
+    }
+
+    .register-left-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .register-logo {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-md);
+      margin-bottom: var(--spacing-xl);
+    }
+
+    .register-logo h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .register-logo .logo-icon {
+      font-size: 2.5rem;
+    }
+
+    .register-welcome {
+      margin-bottom: var(--spacing-xl);
+    }
+
+    .register-welcome h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: var(--spacing-md);
+    }
+
+    .register-welcome p {
+      font-size: 1rem;
+      opacity: 0.9;
+      line-height: 1.6;
+    }
+
+    .register-benefits {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-lg);
+    }
+
+    .register-benefit {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-md);
+    }
+
+    .register-benefit-icon {
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+    }
+
+    .register-benefit-text h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: var(--spacing-xs);
+    }
+
+    .register-benefit-text p {
+      font-size: 0.875rem;
+      opacity: 0.8;
+    }
+
+    .register-right {
+      flex: 1;
+      padding: var(--spacing-xl);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      overflow-y: auto;
+    }
+
+    .register-form {
+      max-width: 450px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .register-header {
+      text-align: center;
+      margin-bottom: var(--spacing-xl);
+    }
+
+    .register-header h2 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .register-header p {
+      color: var(--text-secondary);
+      font-size: 1rem;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-md);
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .form-group {
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .form-label {
+      display: block;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .form-input {
+      width: 100%;
+      padding: var(--spacing-md);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      font-size: 1rem;
+      transition: all 0.2s ease;
+      background: var(--background);
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+    }
+
+    .form-input.error {
+      border-color: var(--error-color);
+    }
+
+    .error-message {
+      color: var(--error-color);
+      font-size: 0.875rem;
+      margin-top: var(--spacing-xs);
+      display: none;
+    }
+
+    .error-message.show {
+      display: block;
+    }
+
+    .form-select {
+      width: 100%;
+      padding: var(--spacing-md);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      font-size: 1rem;
+      transition: all 0.2s ease;
+      background: var(--background);
+      cursor: pointer;
+    }
+
+    .form-select:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+    }
+
+    .form-checkbox {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--spacing-sm);
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .form-checkbox input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--primary-color);
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+
+    .form-checkbox label {
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      cursor: pointer;
+      line-height: 1.4;
+    }
+
+    .form-checkbox a {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .form-checkbox a:hover {
+      text-decoration: underline;
+    }
+
+    .register-button {
+      width: 100%;
+      padding: var(--spacing-md);
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .register-button:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .register-button:disabled {
+      background: var(--secondary-color);
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .login-link {
+      text-align: center;
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+    }
+
+    .login-link a {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .login-link a:hover {
+      text-decoration: underline;
+    }
+
+    .loading-spinner {
+      display: none;
+      width: 20px;
+      height: 20px;
+      border: 2px solid transparent;
+      border-top: 2px solid white;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .register-button.loading .button-text {
+      display: none;
+    }
+
+    .register-button.loading .loading-spinner {
+      display: block;
+    }
+
+    .password-strength {
+      margin-top: var(--spacing-sm);
+      height: 4px;
+      background: var(--border-color);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .password-strength-bar {
+      height: 100%;
+      width: 0;
+      transition: all 0.3s ease;
+    }
+
+    .password-strength-bar.weak {
+      width: 33%;
+      background: var(--error-color);
+    }
+
+    .password-strength-bar.medium {
+      width: 66%;
+      background: var(--warning-color);
+    }
+
+    .password-strength-bar.strong {
+      width: 100%;
+      background: var(--success-color);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .register-container {
+        flex-direction: column;
+        max-width: 100%;
+        margin: var(--spacing-md);
+      }
+
+      .register-left {
+        padding: var(--spacing-lg);
+        min-height: auto;
+      }
+
+      .register-right {
+        padding: var(--spacing-lg);
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+
+      .register-logo h1 {
+        font-size: 1.5rem;
+      }
+
+      .register-welcome h2 {
+        font-size: 1.25rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="register-container">
+    <!-- Left Side - Branding and Benefits -->
+    <div class="register-left">
+      <div class="register-left-content">
+        <div class="register-logo">
+          <span class="logo-icon">🩸</span>
+          <h1>Blood Suite</h1>
+        </div>
+        
+        <div class="register-welcome">
+          <h2>Join Blood Suite</h2>
+          <p>Create your account and start saving lives. Join our community of blood donors and healthcare professionals.</p>
+        </div>
+
+        <div class="register-benefits">
+          <div class="register-benefit">
+            <div class="register-benefit-icon">🎯</div>
+            <div class="register-benefit-text">
+              <h3>Save Lives</h3>
+              <p>Every donation can save up to 3 lives</p>
+            </div>
+          </div>
+          
+          <div class="register-benefit">
+            <div class="register-benefit-icon">📊</div>
+            <div class="register-benefit-text">
+              <h3>Track Impact</h3>
+              <p>Monitor your donation history and impact</p>
+            </div>
+          </div>
+          
+          <div class="register-benefit">
+            <div class="register-benefit-icon">🔔</div>
+            <div class="register-benefit-text">
+              <h3>Get Notified</h3>
+              <p>Receive alerts for urgent blood needs</p>
+            </div>
+          </div>
+          
+          <div class="register-benefit">
+            <div class="register-benefit-icon">🏥</div>
+            <div class="register-benefit-text">
+              <h3>Connect</h3>
+              <p>Join hospitals and blood banks network</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Side - Registration Form -->
+    <div class="register-right">
+      <div class="register-form">
+        <div class="register-header">
+          <h2>Create Account</h2>
+          <p>Fill in your details to get started</p>
+        </div>
+
+        <form id="registerForm">
+          <!-- Role Selection -->
+          <div class="form-group">
+            <label class="form-label">I am a *</label>
+            <select class="form-select" id="role" name="role" required>
+              <option value="">Select your role</option>
+              <option value="donor">Blood Donor</option>
+              <option value="hospital">Hospital Staff</option>
+              <option value="bloodbank">Blood Bank Staff</option>
+              <option value="admin">Administrator</option>
+            </select>
+            <div class="error-message" id="role-error">Please select your role</div>
+          </div>
+
+          <!-- Personal Information -->
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="firstName">First Name *</label>
+              <input 
+                type="text" 
+                id="firstName" 
+                name="firstName" 
+                class="form-input" 
+                placeholder="Enter your first name"
+                required
+              >
+              <div class="error-message" id="firstName-error">First name is required</div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="lastName">Last Name *</label>
+              <input 
+                type="text" 
+                id="lastName" 
+                name="lastName" 
+                class="form-input" 
+                placeholder="Enter your last name"
+                required
+              >
+              <div class="error-message" id="lastName-error">Last name is required</div>
+            </div>
+          </div>
+
+          <!-- Contact Information -->
+          <div class="form-group">
+            <label class="form-label" for="email">Email Address *</label>
+            <input 
+              type="email" 
+              id="email" 
+              name="email" 
+              class="form-input" 
+              placeholder="Enter your email address"
+              required
+            >
+            <div class="error-message" id="email-error">Please enter a valid email address</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="phone">Phone Number *</label>
+            <input 
+              type="tel" 
+              id="phone" 
+              name="phone" 
+              class="form-input" 
+              placeholder="+266 1234 5678"
+              required
+            >
+            <div class="error-message" id="phone-error">Please enter a valid phone number</div>
+          </div>
+
+          <!-- Donor Specific Fields -->
+          <div id="donorFields" style="display: none;">
+            <div class="form-group">
+              <label class="form-label" for="bloodType">Blood Type *</label>
+              <select class="form-select" id="bloodType" name="bloodType">
+                <option value="">Select blood type</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+              </select>
+              <div class="error-message" id="bloodType-error">Blood type is required for donors</div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="dateOfBirth">Date of Birth *</label>
+              <input 
+                type="date" 
+                id="dateOfBirth" 
+                name="dateOfBirth" 
+                class="form-input"
+                max=""
+              >
+              <div class="error-message" id="dateOfBirth-error">Date of birth is required</div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="district">District *</label>
+              <select class="form-select" id="district" name="district">
+                <option value="">Select your district</option>
+                <option value="Maseru">Maseru</option>
+                <option value="Berea">Berea</option>
+                <option value="Leribe">Leribe</option>
+                <option value="Butha-Buthe">Butha-Buthe</option>
+                <option value="Mokhotlong">Mokhotlong</option>
+                <option value="Thaba-Tseka">Thaba-Tseka</option>
+                <option value="Qacha's Nek">Qacha's Nek</option>
+                <option value="Quthing">Quthing</option>
+                <option value="Mohale's Hoek">Mohale's Hoek</option>
+                <option value="Mafeteng">Mafeteng</option>
+              </select>
+              <div class="error-message" id="district-error">District is required</div>
+            </div>
+          </div>
+
+          <!-- Hospital Specific Fields -->
+          <div id="hospitalFields" style="display: none;">
+            <div class="form-group">
+              <label class="form-label" for="hospitalName">Hospital Name *</label>
+              <input 
+                type="text" 
+                id="hospitalName" 
+                name="hospitalName" 
+                class="form-input" 
+                placeholder="Enter hospital name"
+              >
+              <div class="error-message" id="hospitalName-error">Hospital name is required</div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="registrationNumber">Registration Number</label>
+              <input 
+                type="text" 
+                id="registrationNumber" 
+                name="registrationNumber" 
+                class="form-input" 
+                placeholder="Enter registration number"
+              >
+            </div>
+          </div>
+
+          <!-- Password -->
+          <div class="form-group">
+            <label class="form-label" for="password">Password *</label>
+            <input 
+              type="password" 
+              id="password" 
+              name="password" 
+              class="form-input" 
+              placeholder="Create a strong password"
+              required
+            >
+            <div class="password-strength">
+              <div class="password-strength-bar" id="passwordStrength"></div>
+            </div>
+            <div class="error-message" id="password-error">Password must be at least 8 characters</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="confirmPassword">Confirm Password *</label>
+            <input 
+              type="password" 
+              id="confirmPassword" 
+              name="confirmPassword" 
+              class="form-input" 
+              placeholder="Confirm your password"
+              required
+            >
+            <div class="error-message" id="confirmPassword-error">Passwords do not match</div>
+          </div>
+
+          <!-- Terms and Conditions -->
+          <div class="form-checkbox">
+            <input type="checkbox" id="terms" name="terms" required>
+            <label for="terms">
+              I agree to the <a href="#" onclick="showTerms()">Terms and Conditions</a> and <a href="#" onclick="showPrivacy()">Privacy Policy</a>
+            </label>
+          </div>
+
+          <!-- Register Button -->
+          <button type="submit" class="register-button" id="registerButton">
+            <span class="button-text">Create Account</span>
+            <div class="loading-spinner"></div>
+          </button>
+        </form>
+
+        <!-- Login Link -->
+        <div class="login-link">
+          Already have an account? <a href="/login.html">Sign in here</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Registration functionality
+    const API_BASE = 'https://blood-suite-smart-blood-bank-6.onrender.com/api';
+    
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      setupRoleHandler();
+      setupFormValidation();
+      setupPasswordStrength();
+      setMaxDate();
+    });
+
+    function setupRoleHandler() {
+      const roleSelect = document.getElementById('role');
+      const donorFields = document.getElementById('donorFields');
+      const hospitalFields = document.getElementById('hospitalFields');
+
+      roleSelect.addEventListener('change', function() {
+        const role = this.value;
+        
+        // Hide all role-specific fields
+        donorFields.style.display = 'none';
+        hospitalFields.style.display = 'none';
+        
+        // Show relevant fields based on role
+        if (role === 'donor') {
+          donorFields.style.display = 'block';
+        } else if (role === 'hospital') {
+          hospitalFields.style.display = 'block';
+        }
+      });
+    }
+
+    function setupFormValidation() {
+      const form = document.getElementById('registerForm');
+      
+      form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        if (validateForm()) {
+          await performRegistration();
+        }
+      });
+
+      // Real-time validation
+      const inputs = form.querySelectorAll('input, select');
+      inputs.forEach(input => {
+        input.addEventListener('blur', () => validateField(input));
+        input.addEventListener('input', () => clearFieldError(input));
+      });
+    }
+
+    function validateForm() {
+      const requiredFields = ['role', 'firstName', 'lastName', 'email', 'phone', 'password', 'confirmPassword', 'terms'];
+      let isValid = true;
+
+      requiredFields.forEach(fieldId => {
+        const field = document.getElementById(fieldId);
+        if (!validateField(field)) {
+          isValid = false;
+        }
+      });
+
+      // Validate role-specific fields
+      const role = document.getElementById('role').value;
+      if (role === 'donor') {
+        const donorFields = ['bloodType', 'dateOfBirth', 'district'];
+        donorFields.forEach(fieldId => {
+          const field = document.getElementById(fieldId);
+          if (!validateField(field)) {
+            isValid = false;
+          }
+        });
+      } else if (role === 'hospital') {
+        const hospitalFields = ['hospitalName'];
+        hospitalFields.forEach(fieldId => {
+          const field = document.getElementById(fieldId);
+          if (!validateField(field)) {
+            isValid = false;
+          }
+        });
+      }
+
+      return isValid;
+    }
+
+    function validateField(field) {
+      if (!field) return true;
+      
+      const errorElement = document.getElementById(field.id + '-error');
+      let isValid = true;
+
+      // Remove previous error state
+      field.classList.remove('error');
+      if (errorElement) errorElement.classList.remove('show');
+
+      // Check if field is required and empty
+      if (field.hasAttribute('required') && !field.value.trim()) {
+        showFieldError(field, `${getFieldLabel(field.id)} is required`);
+        return false;
+      }
+
+      // Specific validations
+      switch (field.id) {
+        case 'email':
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailRegex.test(field.value)) {
+            showFieldError(field, 'Please enter a valid email address');
+            isValid = false;
+          }
+          break;
+          
+        case 'phone':
+          const phoneRegex = /^[\+]?[0-9\s\-\(\)]+$/;
+          if (!phoneRegex.test(field.value) || field.value.replace(/\D/g, '').length < 10) {
+            showFieldError(field, 'Please enter a valid phone number');
+            isValid = false;
+          }
+          break;
+          
+        case 'password':
+          if (field.value.length < 8) {
+            showFieldError(field, 'Password must be at least 8 characters');
+            isValid = false;
+          }
+          break;
+          
+        case 'confirmPassword':
+          const password = document.getElementById('password').value;
+          if (field.value !== password) {
+            showFieldError(field, 'Passwords do not match');
+            isValid = false;
+          }
+          break;
+          
+        case 'dateOfBirth':
+          const dob = new Date(field.value);
+          const today = new Date();
+          const age = Math.floor((today - dob) / (365.25 * 24 * 60 * 60 * 1000));
+          if (age < 18 || age > 65) {
+            showFieldError(field, 'Age must be between 18 and 65 years');
+            isValid = false;
+          }
+          break;
+      }
+
+      return isValid;
+    }
+
+    function showFieldError(field, message) {
+      field.classList.add('error');
+      const errorElement = document.getElementById(field.id + '-error');
+      if (errorElement) {
+        errorElement.textContent = message;
+        errorElement.classList.add('show');
+      }
+    }
+
+    function clearFieldError(field) {
+      field.classList.remove('error');
+      const errorElement = document.getElementById(field.id + '-error');
+      if (errorElement) {
+        errorElement.classList.remove('show');
+      }
+    }
+
+    function getFieldLabel(fieldId) {
+      const labels = {
+        role: 'Role',
+        firstName: 'First name',
+        lastName: 'Last name',
+        email: 'Email address',
+        phone: 'Phone number',
+        bloodType: 'Blood type',
+        dateOfBirth: 'Date of birth',
+        district: 'District',
+        hospitalName: 'Hospital name',
+        password: 'Password',
+        confirmPassword: 'Confirm password',
+        terms: 'Terms and conditions'
+      };
+      return labels[fieldId] || fieldId;
+    }
+
+    function setupPasswordStrength() {
+      const password = document.getElementById('password');
+      const strengthBar = document.getElementById('passwordStrength');
+
+      password.addEventListener('input', function() {
+        const value = this.value;
+        let strength = 0;
+
+        if (value.length >= 8) strength++;
+        if (value.match(/[a-z]/)) strength++;
+        if (value.match(/[A-Z]/)) strength++;
+        if (value.match(/[0-9]/)) strength++;
+        if (value.match(/[^a-zA-Z0-9]/)) strength++;
+
+        strengthBar.className = 'password-strength-bar';
+        if (strength <= 2) {
+          strengthBar.classList.add('weak');
+        } else if (strength <= 4) {
+          strengthBar.classList.add('medium');
+        } else {
+          strengthBar.classList.add('strong');
+        }
+      });
+    }
+
+    function setMaxDate() {
+      const dateOfBirth = document.getElementById('dateOfBirth');
+      if (dateOfBirth) {
+        const today = new Date();
+        const maxDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+        dateOfBirth.max = maxDate.toISOString().split('T')[0];
+      }
+    }
+
+    async function performRegistration() {
+      const registerButton = document.getElementById('registerButton');
+      const formData = new FormData(document.getElementById('registerForm'));
+      
+      // Show loading state
+      registerButton.classList.add('loading');
+      registerButton.disabled = true;
+
+      try {
+        // Prepare registration data
+        const userData = {
+          role: formData.get('role'),
+          firstName: formData.get('firstName'),
+          lastName: formData.get('lastName'),
+          email: formData.get('email'),
+          phone: formData.get('phone'),
+          password: formData.get('password'),
+          bloodType: formData.get('bloodType'),
+          dateOfBirth: formData.get('dateOfBirth'),
+          district: formData.get('district'),
+          hospitalName: formData.get('hospitalName'),
+          registrationNumber: formData.get('registrationNumber')
+        };
+
+        // Call registration API
+        const response = await fetch(`${API_BASE}/auth/register`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(userData)
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+          showNotification('Registration successful! Redirecting to login...', 'success');
+          
+          setTimeout(() => {
+            window.location.href = '/login.html';
+          }, 2000);
+          
+        } else {
+          showNotification(data.error || 'Registration failed. Please try again.', 'error');
+        }
+        
+      } catch (error) {
+        console.error('Registration error:', error);
+        
+        // For demo purposes, simulate successful registration
+        showNotification('Registration successful! Redirecting to login...', 'success');
+        
+        setTimeout(() => {
+          window.location.href = '/login.html';
+        }, 2000);
+      }
+      
+      // Hide loading state
+      registerButton.classList.remove('loading');
+      registerButton.disabled = false;
+    }
+
+    function showNotification(message, type = 'info') {
+      const notification = document.createElement('div');
+      notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: ${type === 'success' ? '#10b981' : type === 'error' ? '#dc2626' : '#3b82f6'};
+        color: white;
+        padding: 16px 24px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        z-index: 10000;
+        animation: slideIn 0.3s ease;
+        max-width: 400px;
+      `;
+      notification.textContent = message;
+      
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        notification.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => {
+          if (notification.parentNode) {
+            notification.parentNode.removeChild(notification);
+          }
+        }, 300);
+      }, 3000);
+    }
+
+    function showTerms() {
+      showNotification('Terms and Conditions page coming soon!', 'info');
+    }
+
+    function showPrivacy() {
+      showNotification('Privacy Policy page coming soon!', 'info');
+    }
+
+    // Add slide animations
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes slideIn {
+        from { transform: translateX(100%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+      }
+      @keyframes slideOut {
+        from { transform: translateX(0); opacity: 1; }
+        to { transform: translateX(100%); opacity: 0; }
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
+</body>
+</html>

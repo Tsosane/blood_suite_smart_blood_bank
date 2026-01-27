@@ -562,7 +562,7 @@
 
         <!-- Sign Up Link -->
         <div class="login-signup">
-          Don't have an account? <a href="#" onclick="showSignup()">Sign up here</a>
+          Don't have an account? <a href="/register.html">Create account here</a>
         </div>
       </div>
     </div>
@@ -830,8 +830,8 @@
     }
 
     function showSignup() {
-      // Redirect to signup page or show signup modal
-      showNotification('Signup functionality coming soon!', 'info');
+      // Redirect to registration page
+      window.location.href = '/register.html';
     }
 
     // Add slide animations
