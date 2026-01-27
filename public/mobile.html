@@ -118,8 +118,8 @@
 <body>
   <div class="mobile-container">
     <div class="mobile-header">
-      <h1>🩸 Blood Suite</h1>
-      <p>Smart Blood Bank Management</p>
+      <h1>🩸 Blood Donor Portal</h1>
+      <p>Your Personal Donation Journey</p>
     </div>
 
     <div class="mobile-content" id="mobile-content">
@@ -129,44 +129,44 @@
       
       <div id="stats-container" style="display: none;">
         <div class="stat-card">
-          <div class="stat-number" id="total-donors">0</div>
-          <div>Total Donors</div>
+          <div class="stat-number" id="my-donations">0</div>
+          <div>My Donations</div>
         </div>
         
         <div class="stat-card">
-          <div class="stat-number" id="total-units">0</div>
-          <div>Blood Units Available</div>
+          <div class="stat-number" id="lives-saved">0</div>
+          <div>Lives I've Saved</div>
         </div>
         
         <div class="stat-card">
-          <div class="stat-number" id="active-requests">0</div>
-          <div>Active Requests</div>
+          <div class="stat-number" id="next-eligible">0</div>
+          <div>Days Until Next Donation</div>
         </div>
       </div>
       
       <div id="donors-container" style="display: none;">
-        <h3>Recent Donors</h3>
+        <h3>🏆 My Donation History</h3>
         <div id="donors-list"></div>
       </div>
       
       <div id="inventory-container" style="display: none;">
-        <h3>Blood Inventory</h3>
+        <h3>🩸 My Blood Type Impact</h3>
         <div id="inventory-list"></div>
       </div>
     </div>
 
     <div class="mobile-nav">
       <button class="mobile-nav-item active" onclick="showMobileSection('stats')">
-        📊 Stats
+        📊 My Stats
       </button>
       <button class="mobile-nav-item" onclick="showMobileSection('donors')">
-        👥 Donors
+        🏆 History
       </button>
       <button class="mobile-nav-item" onclick="showMobileSection('inventory')">
-        🩸 Inventory
+        🩸 Impact
       </button>
       <button class="mobile-nav-item" onclick="showMobileSection('requests')">
-        📋 Requests
+        � Donate
       </button>
     </div>
 
@@ -218,20 +218,30 @@
     }
 
     function updateMobileStats() {
-      document.getElementById('total-donors').textContent = appData.donors.length;
-      document.getElementById('total-units').textContent = 
-        appData.inventory.reduce((sum, item) => sum + (item.units || 0), 0);
-      document.getElementById('active-requests').textContent = appData.requests.length;
+      // Mock donor data - in real app, this would come from user's profile
+      const myDonations = 5; // Mock data
+      document.getElementById('my-donations').textContent = myDonations;
+      document.getElementById('lives-saved').textContent = myDonations * 3;
+      document.getElementById('next-eligible').textContent = '15'; // Days until next donation
     }
 
     function updateMobileDonors() {
       const donorsList = document.getElementById('donors-list');
-      donorsList.innerHTML = appData.donors.slice(0, 10).map(donor => `
+      // Mock donation history
+      const myDonations = [
+        { date: '2024-01-15', location: 'Maseru Blood Bank', units: 1 },
+        { date: '2023-11-20', location: 'Queen Hospital', units: 1 },
+        { date: '2023-09-10', location: 'Berea Clinic', units: 1 },
+        { date: '2023-07-05', location: 'Maseru Blood Bank', units: 1 },
+        { date: '2023-05-12', location: 'Mafeteng Hospital', units: 1 }
+      ];
+      
+      donorsList.innerHTML = myDonations.map(donation => `
         <div class="donor-card">
-          <div class="blood-type-badge">${donor.blood_type || 'N/A'}</div>
+          <div class="blood-type-badge">🩸</div>
           <div style="flex: 1;">
-            <div style="font-weight: 600;">${donor.name || 'Unknown'}</div>
-            <div style="color: #6b7280; font-size: 0.9rem;">${donor.district || 'N/A'}</div>
+            <div style="font-weight: 600;">${new Date(donation.date).toLocaleDateString()}</div>
+            <div style="color: #6b7280; font-size: 0.9rem;">${donation.location}</div>
           </div>
         </div>
       `).join('');
@@ -239,12 +249,19 @@
 
     function updateMobileInventory() {
       const inventoryList = document.getElementById('inventory-list');
-      inventoryList.innerHTML = appData.inventory.map(item => `
+      // Mock blood type impact data
+      const bloodTypeInfo = [
+        { type: 'Your Blood Type: O+', impact: 'Universal Donor - Can help anyone', demand: 'High Demand' },
+        { type: 'Lives Saved', impact: '15 lives saved so far', demand: 'Hero Status' },
+        { type: 'Next Donation', impact: 'You can donate in 15 days', demand: 'Mark Your Calendar' }
+      ];
+      
+      inventoryList.innerHTML = bloodTypeInfo.map(info => `
         <div class="donor-card">
-          <div class="blood-type-badge">${item.blood_type || 'N/A'}</div>
+          <div class="blood-type-badge">${info.type.split(':')[0] || '🩸'}</div>
           <div style="flex: 1;">
-            <div style="font-weight: 600;">${item.units || 0} units</div>
-            <div style="color: #6b7280; font-size: 0.9rem;">Available</div>
+            <div style="font-weight: 600;">${info.type.includes(':') ? info.type.split(':')[1] : info.type}</div>
+            <div style="color: #6b7280; font-size: 0.9rem;">${info.impact}</div>
           </div>
         </div>
       `).join('');
@@ -272,8 +289,48 @@
       } else if (section === 'inventory') {
         document.getElementById('inventory-container').style.display = 'block';
       } else if (section === 'requests') {
-        // Show stats for now (can be expanded)
+        // Show donation scheduling info
         document.getElementById('stats-container').style.display = 'block';
+        // Add donation scheduling overlay
+        showDonationScheduling();
+      }
+    }
+
+    function showDonationScheduling() {
+      // Create donation scheduling modal
+      const modalHtml = `
+        <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; display: flex; align-items: center; justify-content: center;" id="donation-modal">
+          <div style="background: white; padding: 20px; border-radius: 12px; margin: 20px; max-width: 400px; width: 100%;">
+            <h3 style="color: #dc2626; margin-bottom: 15px;">🩸 Schedule Your Next Donation</h3>
+            <p style="margin-bottom: 15px; color: #6b7280;">You are eligible to donate in 15 days. Mark your calendar!</p>
+            
+            <div style="background: #fef2f2; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+              <strong>Next Eligible Date:</strong><br>
+              <span style="color: #dc2626; font-size: 1.2rem; font-weight: 600;">February 15, 2024</span>
+            </div>
+            
+            <div style="background: #f0f9ff; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+              <strong>📍 Nearest Donation Centers:</strong><br>
+              • Maseru Blood Bank (2km away)<br>
+              • Queen Hospital (5km away)<br>
+              • Berea Clinic (8km away)
+            </div>
+            
+            <button onclick="closeDonationModal()" style="background: #dc2626; color: white; border: none; padding: 12px 24px; border-radius: 8px; width: 100%; cursor: pointer; font-weight: 600;">
+              Got it! I'll be there! 🎉
+            </button>
+          </div>
+        </div>
+      `;
+      
+      // Add modal to page
+      document.body.insertAdjacentHTML('beforeend', modalHtml);
+    }
+
+    function closeDonationModal() {
+      const modal = document.getElementById('donation-modal');
+      if (modal) {
+        modal.remove();
       }
     }
 
