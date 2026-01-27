@@ -6,6 +6,7 @@
   <title>Blood Suite - Web Application</title>
   <link rel="stylesheet" href="styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="auth-check.js"></script>
   <style>
     /* Web Application Design System */
     :root {
@@ -454,11 +455,12 @@
       <a href="#" class="nav-link">Requests</a>
       <a href="#" class="nav-link">Analytics</a>
       <div class="user-menu">
-        <div class="user-avatar">JD</div>
+        <div class="user-avatar" id="user-avatar">JD</div>
         <div>
-          <div style="font-weight: 600;">John Doe</div>
-          <div style="font-size: 0.875rem; color: var(--text-secondary);">Administrator</div>
+          <div style="font-weight: 600;" id="user-name">John Doe</div>
+          <div style="font-size: 0.875rem; color: var(--text-secondary);" id="user-role">Administrator</div>
         </div>
+        <button class="btn btn-secondary btn-sm" onclick="logout()" style="margin-left: var(--spacing-md);">Logout</button>
       </div>
     </nav>
   </header>
