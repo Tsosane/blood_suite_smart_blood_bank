@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Blood Suite - Professional Blood Donor App</title>
+  <meta name="description" content="Professional blood donor app with scheduling, rewards, and life-saving features">
+  <link rel="stylesheet" href="professional.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🩸</text></svg>">
+  <script src="auth-check.js"></script>
+  <style>
+    :root {
+      --mobile-header-height: 60px;
+      --mobile-tab-height: 70px;
+    }
+
+    body {
+      font-family: var(--font-family-sans);
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .mobile-app {
+      max-width: 430px;
+      margin: 0 auto;
+      background: white;
+      min-height: 100vh;
+      position: relative;
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .mobile-header {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 430px;
+      height: var(--mobile-header-height);
+      background: linear-gradient(135deg, var(--primary-600) 0%, var(--primary-800) 100%);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--space-4);
+      z-index: var(--z-fixed);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .mobile-content {
+      padding-top: var(--mobile-header-height);
+      padding-bottom: var(--mobile-tab-height);
+      min-height: 100vh;
+      overflow-y: auto;
+    }
+
+    .mobile-page {
+      display: none;
+      animation: slideIn 0.3s ease;
+    }
+
+    .mobile-page.active {
+      display: block;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .mobile-tab-bar {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 430px;
+      height: var(--mobile-tab-height);
+      background: white;
+      border-top: 1px solid var(--border-primary);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 0 var(--space-4);
+      z-index: var(--z-fixed);
+    }
+
+    .mobile-tab {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-1);
+      padding: var(--space-2);
+      border-radius: var(--radius-lg);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      color: var(--text-tertiary);
+      text-decoration: none;
+      min-width: 60px;
+    }
+
+    .mobile-tab.active {
+      color: var(--primary-600);
+      background: var(--primary-50);
+    }
+
+    .profile-header {
+      background: linear-gradient(135deg, var(--primary-600) 0%, var(--primary-800) 100%);
+      color: white;
+      padding: var(--space-6);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .profile-content {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+    }
+
+    .profile-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-weight: var(--font-bold);
+    }
+
+    .profile-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-4);
+      margin-top: var(--space-6);
+    }
+
+    .profile-stat {
+      text-align: center;
+      padding: var(--space-4);
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-lg);
+      backdrop-filter: blur(10px);
+    }
+
+    .profile-stat-value {
+      font-size: var(--text-2xl);
+      font-weight: var(--font-bold);
+      margin-bottom: var(--space-1);
+    }
+
+    .profile-stat-label {
+      font-size: var(--text-xs);
+      opacity: 0.8;
+    }
+
+    .blood-type-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      background: rgba(255, 255, 255, 0.2);
+      padding: var(--space-2) var(--space-3);
+      border-radius: var(--radius-full);
+      font-weight: var(--font-semibold);
+      font-size: var(--text-sm);
+    }
+
+    .emergency-alert {
+      background: linear-gradient(135deg, var(--error-600) 0%, var(--error-800) 100%);
+      color: white;
+      padding: var(--space-5);
+      margin: var(--space-4);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-lg);
+      animation: emergencyPulse 2s infinite;
+    }
+
+    @keyframes emergencyPulse {
+      0%, 100% { box-shadow: 0 0 20px rgba(239, 68, 68, 0.3); }
+      50% { box-shadow: 0 0 40px rgba(239, 68, 68, 0.6); }
+    }
+
+    .eligibility-check {
+      background: linear-gradient(135deg, var(--success-50) 0%, var(--success-100) 100%);
+      border: 1px solid var(--success-200);
+      border-radius: var(--radius-xl);
+      padding: var(--space-5);
+      margin: var(--space-4);
+    }
+
+    .appointment-card {
+      background: white;
+      border-radius: var(--radius-xl);
+      padding: var(--space-5);
+      margin: var(--space-4);
+      box-shadow: var(--shadow-md);
+      border-left: 4px solid var(--primary-600);
+    }
+
+    .donation-card {
+      background: white;
+      border-radius: var(--radius-xl);
+      padding: var(--space-5);
+      margin: var(--space-4);
+      box-shadow: var(--shadow-md);
+      transition: all 0.3s ease;
+    }
+
+    .donation-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .fab {
+      position: fixed;
+      bottom: calc(var(--mobile-tab-height) + var(--space-4));
+      right: var(--space-4);
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, var(--primary-600) 0%, var(--primary-800) 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5rem;
+      box-shadow: var(--shadow-lg);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: var(--z-fixed);
+    }
+
+    .notification-badge {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      background: var(--error-600);
+      color: white;
+      font-size: 10px;
+      font-weight: var(--font-bold);
+      padding: 2px 6px;
+      border-radius: var(--radius-full);
+      min-width: 18px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="mobile-app">
+    <!-- Mobile Header -->
+    <header class="mobile-header">
+      <div class="mobile-header-title">
+        <span>🩸</span>
+        <span>Blood Suite</span>
+      </div>
+      <div class="mobile-header-actions">
+        <button class="mobile-header-btn" onclick="showNotifications()">
+          🔔
+          <span class="notification-badge" id="notificationBadge">3</span>
+        </button>
+        <button class="mobile-header-btn" onclick="showProfile()">👤</button>
+      </div>
+    </header>
+
+    <!-- Mobile Content -->
+    <main class="mobile-content">
+      <!-- Dashboard Page -->
+      <div id="dashboard-page" class="mobile-page active">
+        <!-- Profile Header -->
+        <div class="profile-header">
+          <div class="profile-content">
+            <div class="profile-avatar" id="userAvatar">JD</div>
+            <div class="profile-info">
+              <h2 id="userName">John Doe</h2>
+              <p>📍 Maseru, Lesotho</p>
+              <div class="blood-type-badge">
+                <span>🩸</span>
+                <span id="userBloodType">O+</span>
+              </div>
+            </div>
+          </div>
+          <div class="profile-stats">
+            <div class="profile-stat">
+              <div class="profile-stat-value" id="totalDonations">12</div>
+              <div class="profile-stat-label">Total Donations</div>
+            </div>
+            <div class="profile-stat">
+              <div class="profile-stat-value" id="livesSaved">36</div>
+              <div class="profile-stat-label">Lives Saved</div>
+            </div>
+            <div class="profile-stat">
+              <div class="profile-stat-value" id="donorLevel">Hero</div>
+              <div class="profile-stat-label">Donor Level</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Emergency Alert -->
+        <div class="emergency-alert">
+          <div class="emergency-header">
+            <div class="emergency-icon">🚨</div>
+            <div class="emergency-title">URGENT: Blood Needed</div>
+          </div>
+          <div class="emergency-message">
+            Queen 'Mamohato Hospital urgently needs O- blood type. Your blood type could save a life today!
+          </div>
+          <div class="emergency-actions">
+            <button class="btn btn-primary" onclick="showDonationForm()">Donate Now</button>
+            <button class="btn btn-secondary" style="background: rgba(255,255,255,0.2); color: white;">Learn More</button>
+          </div>
+        </div>
+
+        <!-- Eligibility Check -->
+        <div class="eligibility-check">
+          <div class="eligibility-header">
+            <div class="eligibility-icon">✓</div>
+            <div class="eligibility-title">Eligibility Status</div>
+          </div>
+          <div class="eligibility-status">
+            <div class="eligibility-status-indicator"></div>
+            <span>You are eligible to donate</span>
+          </div>
+        </div>
+
+        <!-- Next Appointment -->
+        <div class="appointment-card">
+          <div class="appointment-header">
+            <div class="appointment-info">
+              <h3>Next Appointment</h3>
+              <div class="appointment-details">
+                <div class="appointment-detail">
+                  <span>📅</span>
+                  <span>Tomorrow, 2:00 PM</span>
+                </div>
+                <div class="appointment-detail">
+                  <span>🏥</span>
+                  <span>Queen 'Mamohato Hospital</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="appointment-actions">
+            <button class="btn btn-primary btn-sm" onclick="showQRCode()">Show QR Code</button>
+            <button class="btn btn-secondary btn-sm" onclick="rescheduleAppointment()">Reschedule</button>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="rewards-grid">
+          <div class="donation-card" onclick="showDonationForm()">
+            <div class="donation-card-header">
+              <div class="donation-card-title">Schedule Donation</div>
+              <div class="donation-card-icon primary">🩸</div>
+            </div>
+            <p>Book your next life-saving donation</p>
+          </div>
+          
+          <div class="donation-card" onclick="showLocations()">
+            <div class="donation-card-header">
+              <div class="donation-card-title">Find Centers</div>
+              <div class="donation-card-icon success">📍</div>
+            </div>
+            <p>Locate nearby donation centers</p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Mobile Tab Bar -->
+    <nav class="mobile-tab-bar">
+      <a href="#" class="mobile-tab active" onclick="showPage('dashboard')">
+        <span class="mobile-tab-icon">🏠</span>
+        <span class="mobile-tab-label">Home</span>
+      </a>
+      <a href="#" class="mobile-tab" onclick="showPage('appointments')">
+        <span class="mobile-tab-icon">📅</span>
+        <span class="mobile-tab-label">Appointments</span>
+      </a>
+      <a href="#" class="mobile-tab" onclick="showPage('rewards')">
+        <span class="mobile-tab-icon">🏆</span>
+        <span class="mobile-tab-label">Rewards</span>
+      </a>
+      <a href="#" class="mobile-tab" onclick="showPage('locations')">
+        <span class="mobile-tab-icon">📍</span>
+        <span class="mobile-tab-label">Locations</span>
+      </a>
+    </nav>
+
+    <!-- Floating Action Button -->
+    <div class="fab" onclick="showDonationForm()">+</div>
+  </div>
+
+  <script>
+    // Mobile Donor App JavaScript
+    const API_BASE = 'https://blood-suite-smart-blood-bank-6.onrender.com/api';
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      initializeApp();
+      loadUserData();
+      checkEmergencyAlerts();
+    });
+
+    function initializeApp() {
+      // Check authentication
+      const auth = checkAuthentication();
+      if (!auth) {
+        window.location.href = '/login.html';
+        return;
+      }
+
+      // Setup tab navigation
+      setupTabNavigation();
+      
+      // Load initial data
+      loadDashboardData();
+    }
+
+    function setupTabNavigation() {
+      const tabs = document.querySelectorAll('.mobile-tab');
+      const pages = document.querySelectorAll('.mobile-page');
+
+      tabs.forEach(tab => {
+        tab.addEventListener('click', function(e) {
+          e.preventDefault();
+          
+          // Remove active class from all tabs and pages
+          tabs.forEach(t => t.classList.remove('active'));
+          pages.forEach(p => p.classList.remove('active'));
+          
+          // Add active class to clicked tab and corresponding page
+          this.classList.add('active');
+          const pageName = this.getAttribute('onclick').match(/'([^']+)'/)[1];
+          const targetPage = document.getElementById(pageName + '-page');
+          if (targetPage) {
+            targetPage.classList.add('active');
+          }
+        });
+      });
+    }
+
+    function showPage(pageName) {
+      const tabs = document.querySelectorAll('.mobile-tab');
+      const pages = document.querySelectorAll('.mobile-page');
+
+      tabs.forEach(t => t.classList.remove('active'));
+      pages.forEach(p => p.classList.remove('active'));
+
+      const activeTab = Array.from(tabs).find(tab => 
+        tab.getAttribute('onclick').includes(pageName)
+      );
+      if (activeTab) activeTab.classList.add('active');
+
+      const targetPage = document.getElementById(pageName + '-page');
+      if (targetPage) targetPage.classList.add('active');
+    }
+
+    function loadUserData() {
+      const user = getCurrentUser();
+      if (user) {
+        // Update user profile
+        document.getElementById('userName').textContent = user.name || 'John Doe';
+        document.getElementById('userBloodType').textContent = user.bloodType || 'O+';
+        
+        // Update avatar
+        const initials = (user.name || 'JD').substring(0, 2).toUpperCase();
+        document.getElementById('userAvatar').textContent = initials;
+        
+        // Load donor statistics
+        loadDonorStats();
+      }
+    }
+
+    async function loadDonorStats() {
+      try {
+        const response = await fetch(`${API_BASE}/donors/stats`);
+        const stats = await response.json();
+        
+        if (stats) {
+          document.getElementById('totalDonations').textContent = stats.totalDonations || 12;
+          document.getElementById('livesSaved').textContent = stats.livesSaved || 36;
+          document.getElementById('donorLevel').textContent = stats.donorLevel || 'Hero';
+        }
+      } catch (error) {
+        console.log('Using mock donor stats');
+      }
+    }
+
+    async function loadDashboardData() {
+      try {
+        // Load appointments
+        const appointmentsResponse = await fetch(`${API_BASE}/appointments`);
+        const appointments = await appointmentsResponse.json();
+        
+        // Load eligibility status
+        const eligibilityResponse = await fetch(`${API_BASE}/donors/eligibility`);
+        const eligibility = await eligibilityResponse.json();
+        
+        // Update UI with real data
+        updateDashboardUI(appointments, eligibility);
+        
+      } catch (error) {
+        console.log('Using mock dashboard data');
+      }
+    }
+
+    function updateDashboardUI(appointments, eligibility) {
+      // Update next appointment
+      if (appointments && appointments.length > 0) {
+        const nextAppointment = appointments[0];
+        // Update appointment card with real data
+      }
+      
+      // Update eligibility status
+      if (eligibility) {
+        // Update eligibility check with real data
+      }
+    }
+
+    function showDonationForm() {
+      // Show donation scheduling modal
+      showNotification('Opening donation form...', 'info');
+    }
+
+    function showQRCode() {
+      // Generate and show QR code for check-in
+      showNotification('Generating QR code for check-in...', 'info');
+    }
+
+    function showLocations() {
+      showPage('locations');
+    }
+
+    function showNotifications() {
+      showNotification('You have 3 new notifications', 'info');
+    }
+
+    function showProfile() {
+      showNotification('Opening profile settings...', 'info');
+    }
+
+    function rescheduleAppointment() {
+      showNotification('Opening reschedule options...', 'info');
+    }
+
+    async function checkEmergencyAlerts() {
+      try {
+        const response = await fetch(`${API_BASE}/alerts/emergency`);
+        const alerts = await response.json();
+        
+        if (alerts && alerts.length > 0) {
+          // Show emergency alerts
+          updateEmergencyAlert(alerts[0]);
+        }
+      } catch (error) {
+        console.log('Using mock emergency alerts');
+      }
+    }
+
+    function updateEmergencyAlert(alert) {
+      const emergencyAlert = document.querySelector('.emergency-alert');
+      if (emergencyAlert && alert) {
+        emergencyAlert.querySelector('.emergency-message').textContent = alert.message;
+        emergencyAlert.style.display = 'block';
+      }
+    }
+
+    function showNotification(message, type = 'info') {
+      const notification = document.createElement('div');
+      notification.style.cssText = `
+        position: fixed;
+        top: 80px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: ${type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#3b82f6'};
+        color: white;
+        padding: 12px 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        z-index: 10000;
+        animation: slideDown 0.3s ease;
+        max-width: 300px;
+        text-align: center;
+      `;
+      notification.textContent = message;
+      
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        notification.style.animation = 'slideUp 0.3s ease';
+        setTimeout(() => {
+          if (notification.parentNode) {
+            notification.parentNode.removeChild(notification);
+          }
+        }, 300);
+      }, 3000);
+    }
+
+    // Add animations
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes slideDown {
+        from { transform: translate(-50%, -100%); opacity: 0; }
+        to { transform: translate(-50%, 0); opacity: 1; }
+      }
+      @keyframes slideUp {
+        from { transform: translate(-50%, 0); opacity: 1; }
+        to { transform: translate(-50%, -100%); opacity: 0; }
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
+</body>
+</html>
