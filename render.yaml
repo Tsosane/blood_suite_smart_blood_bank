@@ -1,0 +1,22 @@
+services:
+  # Web Service
+  - type: web
+    name: blood-suite
+    env: node
+    plan: starter
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    
+  # PostgreSQL Database
+  - type: pserv
+    name: blood-suite-db
+    env: postgres
+    plan: starter
+    ipAllowList:
+      - source: 0.0.0.0/0
+        description: Allow all IPs for development
+
+databases:
+  - name: blood_suite_db
+    plan: starter
