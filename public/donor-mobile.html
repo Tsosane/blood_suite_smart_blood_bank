@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blood Suite - Donor Portal</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    .donor-container {
+      max-width: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+      background: #fef2f2;
+    }
+    
+    .donor-header {
+      background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+      color: white;
+      padding: 20px;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .donor-welcome {
+      background: white;
+      margin: 20px;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    
+    .donor-stats {
+      background: white;
+      margin: 20px;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    
+    .stat-row {
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 20px;
+    }
+    
+    .stat-item {
+      text-align: center;
+    }
+    
+    .stat-number {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #dc2626;
+    }
+    
+    .stat-label {
+      font-size: 0.9rem;
+      color: #6b7280;
+      margin-top: 5px;
+    }
+    
+    .donor-nav {
+      display: flex;
+      justify-content: space-around;
+      background: white;
+      border-top: 1px solid #e5e7eb;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+    }
+    
+    .donor-nav-item {
+      flex: 1;
+      padding: 15px;
+      text-align: center;
+      border: none;
+      background: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+    }
+    
+    .donor-nav-item.active {
+      color: #dc2626;
+      background: #fef2f2;
+    }
+    
+    .donor-content {
+      padding: 20px;
+      padding-bottom: 80px;
+      min-height: calc(100vh - 200px);
+    }
+    
+    .donation-card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      border-left: 4px solid #dc2626;
+    }
+    
+    .next-donation {
+      background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px;
+      text-align: center;
+      border: 2px dashed #dc2626;
+    }
+    
+    .blood-type-display {
+      background: #dc2626;
+      color: white;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      margin: 20px;
+    }
+    
+    .blood-type-large {
+      font-size: 3rem;
+      font-weight: 700;
+      margin: 10px 0;
+    }
+    
+    .benefit-card {
+      background: white;
+      border-radius: 12px;
+      padding: 15px;
+      margin-bottom: 10px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    
+    .benefit-icon {
+      font-size: 1.5rem;
+      width: 40px;
+      text-align: center;
+    }
+    
+    .action-btn {
+      background: #dc2626;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+      margin: 10px 0;
+      transition: background 0.3s ease;
+    }
+    
+    .action-btn:hover {
+      background: #b91c1c;
+    }
+    
+    .action-btn.secondary {
+      background: #6b7280;
+    }
+    
+    .action-btn.secondary:hover {
+      background: #4b5563;
+    }
+    
+    .loading {
+      text-align: center;
+      padding: 40px;
+      color: #6b7280;
+    }
+    
+    .info-box {
+      background: #fef3c7;
+      border: 1px solid #f59e0b;
+      border-radius: 8px;
+      padding: 15px;
+      margin: 15px 0;
+      color: #92400e;
+    }
+    
+    .success-box {
+      background: #d1fae5;
+      border: 1px solid #10b981;
+      border-radius: 8px;
+      padding: 15px;
+      margin: 15px 0;
+      color: #065f46;
+    }
+  </style>
+</head>
+<body>
+  <div class="donor-container">
+    <div class="donor-header">
+      <h1>🩸 Donor Portal</h1>
+      <p>Save Lives, Donate Blood</p>
+    </div>
+
+    <div class="donor-welcome">
+      <h2>Welcome, Donor! 👋</h2>
+      <p>Thank you for being a life-saving hero in our community.</p>
+    </div>
+
+    <div class="blood-type-display">
+      <div>Your Blood Type</div>
+      <div class="blood-type-large" id="donor-blood-type">O+</div>
+      <div>You can save up to 3 lives with each donation!</div>
+    </div>
+
+    <div class="donor-stats">
+      <h3>Your Donation Impact</h3>
+      <div class="stat-row">
+        <div class="stat-item">
+          <div class="stat-number" id="total-donations">0</div>
+          <div class="stat-label">Total Donations</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" id="lives-saved">0</div>
+          <div class="stat-label">Lives Saved</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" id="next-eligible">--</div>
+          <div class="stat-label">Days Until Next Donation</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="next-donation">
+      <h3>📅 Next Donation Eligibility</h3>
+      <p id="next-donation-date">You are eligible to donate today!</p>
+      <button class="action-btn" onclick="scheduleDonation()">Schedule Donation</button>
+    </div>
+
+    <div class="donor-content" id="donor-content">
+      <div id="profile-section" class="content-section">
+        <div class="donation-card">
+          <h3>📋 Your Profile</h3>
+          <div id="donor-profile">
+            <p><strong>Name:</strong> <span id="donor-name">Loading...</span></p>
+            <p><strong>District:</strong> <span id="donor-district">Loading...</span></p>
+            <p><strong>Member Since:</strong> <span id="donor-since">Loading...</span></p>
+          </div>
+          <button class="action-btn secondary" onclick="updateProfile()">Update Profile</button>
+        </div>
+
+        <div class="donation-card">
+          <h3>🏆 Donation Benefits</h3>
+          <div class="benefit-card">
+            <div class="benefit-icon">❤️</div>
+            <div>
+              <strong>Health Benefits</strong>
+              <p style="margin: 5px 0; color: #6b7280; font-size: 0.9rem;">Free health screening with each donation</p>
+            </div>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon">🎖️</div>
+            <div>
+              <strong>Recognition</strong>
+              <p style="margin: 5px 0; color: #6b7280; font-size: 0.9rem;">Certificates for milestone donations</p>
+            </div>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon">📱</div>
+            <div>
+              <strong>Priority Access</strong>
+              <p style="margin: 5px 0; color: #6b7280; font-size: 0.9rem;">Priority notifications for urgent needs</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <strong>💡 Did You Know?</strong>
+          <p>One blood donation can save up to 3 lives! Your contribution makes a huge difference in our community.</p>
+        </div>
+      </div>
+
+      <div id="history-section" class="content-section" style="display: none;">
+        <div class="donation-card">
+          <h3>📜 Your Donation History</h3>
+          <div id="donation-history">
+            <div class="loading">Loading your donation history...</div>
+          </div>
+        </div>
+      </div>
+
+      <div id="tips-section" class="content-section" style="display: none;">
+        <div class="donation-card">
+          <h3>💉 Donation Tips</h3>
+          <div class="benefit-card">
+            <div class="benefit-icon">🥤</div>
+            <div>
+              <strong>Before Donation</strong>
+              <p style="margin: 5px 0; color: #6b7280; font-size: 0.9rem;">Drink plenty of water and eat a healthy meal</p>
+            </div>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon">😴</div>
+            <div>
+              <strong>Rest Well</strong>
+              <p style="margin: 5px 0; color: #6b7280; font-size: 0.9rem;">Get a good night's sleep before donating</p>
+            </div>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon">🆔</div>
+            <div>
+              <strong>Bring ID</strong>
+              <p style="margin: 5px 0; color: #6b7280; font-size: 0.9rem;">Don't forget your identification document</p>
+            </div>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon">🍎</div>
+            <div>
+              <strong>After Donation</strong>
+              <p style="margin: 5px 0; color: #6b7280; font-size: 0.9rem;">Enjoy refreshments and rest for 15 minutes</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="success-box">
+          <strong>⏰ When to Donate</strong>
+          <p>You can donate blood every 56 days (8 weeks). Regular donations help maintain stable blood supplies for emergencies.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="donor-nav">
+      <button class="donor-nav-item active" onclick="showDonorSection('profile')">
+        👤 Profile
+      </button>
+      <button class="donor-nav-item" onclick="showDonorSection('history')">
+        📜 History
+      </button>
+      <button class="donor-nav-item" onclick="showDonorSection('tips')">
+        💡 Tips
+      </button>
+      <button class="donor-nav-item" onclick="emergencyContact()">
+        🆘 Emergency
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // Mock donor data (in real app, this would come from API)
+    const donorData = {
+      name: "John Doe",
+      bloodType: "O+",
+      district: "Maseru",
+      totalDonations: 5,
+      memberSince: "2023-01-15",
+      lastDonation: "2024-01-10",
+      nextEligible: "2024-03-07"
+    };
+
+    function initializeDonorApp() {
+      // Update donor information
+      document.getElementById('donor-name').textContent = donorData.name;
+      document.getElementById('donor-blood-type').textContent = donorData.bloodType;
+      document.getElementById('donor-district').textContent = donorData.district;
+      document.getElementById('donor-since').textContent = new Date(donorData.memberSince).toLocaleDateString();
+      
+      // Update stats
+      document.getElementById('total-donations').textContent = donorData.totalDonations;
+      document.getElementById('lives-saved').textContent = donorData.totalDonations * 3;
+      
+      // Calculate days until next donation
+      const today = new Date();
+      const nextEligible = new Date(donorData.nextEligible);
+      const daysUntil = Math.ceil((nextEligible - today) / (1000 * 60 * 60 * 24));
+      
+      if (daysUntil <= 0) {
+        document.getElementById('next-eligible').textContent = "Today!";
+        document.getElementById('next-donation-date').textContent = "You are eligible to donate today! 🎉";
+      } else {
+        document.getElementById('next-eligible').textContent = daysUntil;
+        document.getElementById('next-donation-date').textContent = `You can donate in ${daysUntil} days`;
+      }
+      
+      // Load donation history
+      loadDonationHistory();
+    }
+
+    function loadDonationHistory() {
+      // Mock donation history
+      const history = [
+        { date: "2024-01-10", location: "Maseru Blood Bank", units: 1 },
+        { date: "2023-11-15", location: "Queen 'Mamohato Hospital", units: 1 },
+        { date: "2023-09-20", location: "Maseru Blood Bank", units: 1 },
+        { date: "2023-07-25", location: "Berea Hospital", units: 1 },
+        { date: "2023-05-30", location: "Maseru Blood Bank", units: 1 }
+      ];
+
+      const historyHtml = history.map(donation => `
+        <div class="benefit-card">
+          <div class="benefit-icon">🩸</div>
+          <div>
+            <strong>${new Date(donation.date).toLocaleDateString()}</strong>
+            <p style="margin: 5px 0; color: #6b7280; font-size: 0.9rem;">${donation.location} • ${donation.units} unit(s)</p>
+          </div>
+        </div>
+      `).join('');
+
+      document.getElementById('donation-history').innerHTML = historyHtml;
+    }
+
+    function showDonorSection(section) {
+      // Update nav
+      document.querySelectorAll('.donor-nav-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      event.target.classList.add('active');
+
+      // Hide all sections
+      document.querySelectorAll('.content-section').forEach(sec => {
+        sec.style.display = 'none';
+      });
+
+      // Show selected section
+      document.getElementById(`${section}-section`).style.display = 'block';
+    }
+
+    function scheduleDonation() {
+      alert('Thank you for your interest! Please contact your nearest blood bank or hospital to schedule your donation. Your contribution saves lives! 🩸');
+    }
+
+    function updateProfile() {
+      alert('Profile update feature coming soon! For now, please contact the blood bank administration to update your information.');
+    }
+
+    function emergencyContact() {
+      alert('Emergency Blood Request:\n\nFor urgent blood needs, please call:\n• Maseru Blood Bank: +266 1234 5678\n• Emergency Hotline: +266 911\n\nYour blood type can save lives in critical situations!');
+    }
+
+    // Initialize app on page load
+    document.addEventListener('DOMContentLoaded', initializeDonorApp);
+  </script>
+</body>
+</html>
