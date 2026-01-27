@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blood Suite Enterprise - Blood Bank Management System</title>
+  <meta name="description" content="Professional blood bank and donor management system for healthcare organizations">
+  <meta name="keywords" content="blood bank, donor management, healthcare, medical, Lesotho">
+  <link rel="stylesheet" href="professional.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🩸</text></svg>">
+  <script src="auth-check.js"></script>
+  <script src="scroll-ui.js"></script>
+</head>
+<body>
+  <!-- Enterprise Header -->
+  <header class="enterprise-header">
+    <div class="container">
+      <div class="enterprise-logo">
+        <div class="enterprise-logo-icon">🩸</div>
+        <span>Blood Suite Enterprise</span>
+      </div>
+      
+      <nav class="enterprise-nav">
+        <a href="#" class="active">Dashboard</a>
+        <a href="#">Donors</a>
+        <a href="#">Inventory</a>
+        <a href="#">Requests</a>
+        <a href="#">Analytics</a>
+        <a href="#">Reports</a>
+      </nav>
+      
+      <div class="enterprise-user">
+        <div class="enterprise-status-indicator enterprise-status-online"></div>
+        <div class="enterprise-avatar" id="user-avatar">JD</div>
+        <div>
+          <div style="font-weight: 600; color: white;" id="user-name">John Doe</div>
+          <div style="font-size: 0.75rem; color: rgba(255, 255, 255, 0.7);" id="user-role">Administrator</div>
+        </div>
+        <button class="enterprise-btn enterprise-btn-secondary enterprise-btn-sm" onclick="logout()">Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Enterprise Sidebar -->
+  <aside class="enterprise-sidebar">
+    <div class="enterprise-sidebar-section">
+      <div class="enterprise-sidebar-title">Navigation</div>
+      <a href="#" class="enterprise-sidebar-item active">
+        <span>📊</span>
+        <span>Dashboard</span>
+      </a>
+      <a href="#" class="enterprise-sidebar-item">
+        <span>👥</span>
+        <span>Donors</span>
+      </a>
+      <a href="#" class="enterprise-sidebar-item">
+        <span>🩸</span>
+        <span>Blood Inventory</span>
+      </a>
+      <a href="#" class="enterprise-sidebar-item">
+        <span>📋</span>
+        <span>Blood Requests</span>
+      </a>
+      <a href="#" class="enterprise-sidebar-item">
+        <span>🏥</span>
+        <span>Hospitals</span>
+      </a>
+    </div>
+
+    <div class="enterprise-sidebar-section">
+      <div class="enterprise-sidebar-title">Management</div>
+      <a href="#" class="enterprise-sidebar-item">
+        <span>📈</span>
+        <span>Analytics</span>
+      </a>
+      <a href="#" class="enterprise-sidebar-item">
+        <span>📊</span>
+        <span>Reports</span>
+      </a>
+      <a href="#" class="enterprise-sidebar-item">
+        <span>🔔</span>
+        <span>Notifications</span>
+      </a>
+      <a href="#" class="enterprise-sidebar-item">
+        <span>⚙️</span>
+        <span>Settings</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="enterprise-main">
+    <div class="enterprise-page-header">
+      <h1 class="enterprise-page-title">Blood Bank Dashboard</h1>
+      <p class="enterprise-page-subtitle">Real-time monitoring and management of blood bank operations</p>
+    </div>
+
+    <!-- Key Metrics -->
+    <div class="enterprise-stats-grid">
+      <div class="enterprise-stat-card">
+        <div class="enterprise-stat-header">
+          <div class="enterprise-stat-title">Total Donors</div>
+          <div class="enterprise-stat-icon primary">👥</div>
+        </div>
+        <div class="enterprise-stat-value">2,847</div>
+        <div class="enterprise-stat-change positive">
+          <span>↑</span>
+          <span>12% from last month</span>
+        </div>
+      </div>
+
+      <div class="enterprise-stat-card">
+        <div class="enterprise-stat-header">
+          <div class="enterprise-stat-title">Blood Units</div>
+          <div class="enterprise-stat-icon success">🩸</div>
+        </div>
+        <div class="enterprise-stat-value">1,456</div>
+        <div class="enterprise-stat-change positive">
+          <span>↑</span>
+          <span>8% from last week</span>
+        </div>
+      </div>
+
+      <div class="enterprise-stat-card">
+        <div class="enterprise-stat-header">
+          <div class="enterprise-stat-title">Active Requests</div>
+          <div class="enterprise-stat-icon warning">📋</div>
+        </div>
+        <div class="enterprise-stat-value">47</div>
+        <div class="enterprise-stat-change negative">
+          <span>↑</span>
+          <span>5 urgent requests</span>
+        </div>
+      </div>
+
+      <div class="enterprise-stat-card">
+        <div class="enterprise-stat-header">
+          <div class="enterprise-stat-title">Lives Saved</div>
+          <div class="enterprise-stat-icon primary">❤️</div>
+        </div>
+        <div class="enterprise-stat-value">8,234</div>
+        <div class="enterprise-stat-change positive">
+          <span>↑</span>
+          <span>234 this month</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="enterprise-content-card">
+      <div class="enterprise-card-header">
+        <h2 class="enterprise-card-title">Recent Activity</h2>
+        <div class="enterprise-card-actions">
+          <button class="enterprise-btn enterprise-btn-secondary enterprise-btn-sm">View All</button>
+        </div>
+      </div>
+      <div class="enterprise-card-body">
+        <table class="enterprise-table">
+          <thead>
+            <tr>
+              <th>Activity</th>
+              <th>User</th>
+              <th>Type</th>
+              <th>Status</th>
+              <th>Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>New donor registration</td>
+              <td>Sarah Johnson</td>
+              <td>Registration</td>
+              <td><span class="enterprise-badge enterprise-badge-success">Completed</span></td>
+              <td>2 minutes ago</td>
+            </tr>
+            <tr>
+              <td>Urgent blood request</td>
+              <td>Queen 'Mamohato Hospital</td>
+              <td>Request</td>
+              <td><span class="enterprise-badge enterprise-badge-warning">Urgent</span></td>
+              <td>15 minutes ago</td>
+            </tr>
+            <tr>
+              <td>Blood donation completed</td>
+              <td>Michael Thabo</td>
+              <td>Donation</td>
+              <td><span class="enterprise-badge enterprise-badge-success">Completed</span></td>
+              <td>1 hour ago</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Blood Inventory -->
+    <div class="enterprise-content-card">
+      <div class="enterprise-card-header">
+        <h2 class="enterprise-card-title">Blood Inventory</h2>
+        <div class="enterprise-card-actions">
+          <button class="enterprise-btn enterprise-btn-primary enterprise-btn-sm">Manage</button>
+        </div>
+      </div>
+      <div class="enterprise-card-body">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1.5rem;">
+          <div style="text-align: center; padding: 1rem; background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%); border-radius: 0.75rem;">
+            <div style="font-size: 1.5rem; font-weight: 700; color: #dc2626;">A+</div>
+            <div style="color: #6b7280; font-size: 0.875rem;">245 units</div>
+            <div style="color: #059669; font-size: 0.75rem;">+12</div>
+          </div>
+          <div style="text-align: center; padding: 1rem; background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%); border-radius: 0.75rem;">
+            <div style="font-size: 1.5rem; font-weight: 700; color: #dc2626;">O+</div>
+            <div style="color: #6b7280; font-size: 0.875rem;">423 units</div>
+            <div style="color: #059669; font-size: 0.75rem;">+28</div>
+          </div>
+          <div style="text-align: center; padding: 1rem; background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%); border-radius: 0.75rem;">
+            <div style="font-size: 1.5rem; font-weight: 700; color: #dc2626;">O-</div>
+            <div style="color: #ef4444; font-size: 0.875rem;">Critical</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Enterprise Dashboard JavaScript
+    const API_BASE = 'https://blood-suite-smart-blood-bank-6.onrender.com/api';
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      loadDashboardData();
+      setupEventListeners();
+    });
+
+    function setupEventListeners() {
+      // Sidebar navigation
+      document.querySelectorAll('.enterprise-sidebar-item').forEach(item => {
+        item.addEventListener('click', function(e) {
+          e.preventDefault();
+          document.querySelectorAll('.enterprise-sidebar-item').forEach(i => i.classList.remove('active'));
+          this.classList.add('active');
+        });
+      });
+
+      // Main navigation
+      document.querySelectorAll('.enterprise-nav a').forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          document.querySelectorAll('.enterprise-nav a').forEach(l => l.classList.remove('active'));
+          this.classList.add('active');
+        });
+      });
+    }
+
+    async function loadDashboardData() {
+      try {
+        const [donorsRes, inventoryRes, requestsRes] = await Promise.all([
+          fetch(`${API_BASE}/donors`),
+          fetch(`${API_BASE}/inventory`),
+          fetch(`${API_BASE}/requests`)
+        ]);
+
+        const donorsData = await donorsRes.json();
+        const inventoryData = await inventoryRes.json();
+        const requestsData = await requestsRes.json();
+
+        updateDashboardStats(donorsData, inventoryData, requestsData);
+
+      } catch (error) {
+        console.log('Using mock data for demonstration');
+      }
+    }
+
+    function updateDashboardStats(donors, inventory, requests) {
+      // Update with real data if available
+      const totalDonors = donors.donors?.length || 2847;
+      const totalUnits = inventory.inventory?.reduce((sum, item) => sum + (item.units || 0), 0) || 1456;
+      const activeRequests = requests.requests?.length || 47;
+
+      // Update DOM elements
+      const statValues = document.querySelectorAll('.enterprise-stat-value');
+      if (statValues[0]) statValues[0].textContent = totalDonors.toLocaleString();
+      if (statValues[1]) statValues[1].textContent = totalUnits.toLocaleString();
+      if (statValues[2]) statValues[2].textContent = activeRequests.toLocaleString();
+    }
+  </script>
+</body>
+</html>
