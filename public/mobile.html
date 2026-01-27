@@ -98,20 +98,76 @@
       color: #6b7280;
     }
     
-    .refresh-btn {
-      position: fixed;
-      bottom: 90px;
-      right: 20px;
-      background: #dc2626;
-      color: white;
-      border: none;
-      border-radius: 50%;
-      width: 56px;
-      height: 56px;
-      font-size: 1.2rem;
+    .alert-banner {
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      border: 2px solid #f59e0b;
+      border-radius: 12px;
+      padding: 15px;
+      margin: 20px;
+      text-align: center;
+      position: relative;
+      animation: pulse 2s infinite;
+    }
+    
+    .alert-banner.urgent {
+      background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+      border-color: #dc2626;
+    }
+    
+    .alert-banner.success {
+      background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+      border-color: #10b981;
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+      100% { transform: scale(1); }
+    }
+    
+    .countdown-timer {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #dc2626;
+      margin: 10px 0;
+    }
+    
+    .reminder-settings {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    
+    .toggle-switch {
+      position: relative;
+      width: 60px;
+      height: 30px;
+      background: #e5e7eb;
+      border-radius: 15px;
       cursor: pointer;
-      box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
-      z-index: 99;
+      transition: background 0.3s ease;
+    }
+    
+    .toggle-switch.active {
+      background: #dc2626;
+    }
+    
+    .toggle-switch::after {
+      content: '';
+      position: absolute;
+      width: 26px;
+      height: 26px;
+      background: white;
+      border-radius: 50%;
+      top: 2px;
+      left: 2px;
+      transition: transform 0.3s ease;
+    }
+    
+    .toggle-switch.active::after {
+      transform: translateX(30px);
     }
   </style>
 </head>
@@ -123,6 +179,13 @@
     </div>
 
     <div class="mobile-content" id="mobile-content">
+      <!-- Donation Reminder Alert Banner -->
+      <div id="reminder-alert" class="alert-banner" style="display: none;">
+        <div id="alert-content">
+          <!-- Dynamic alert content will be inserted here -->
+        </div>
+      </div>
+      
       <div class="loading" id="loading">
         <div>🔄 Loading data...</div>
       </div>
@@ -222,6 +285,37 @@
       <div id="notifications-container" style="display: none;">
         <h3>🔔 Notifications</h3>
         <div id="notifications-list"></div>
+        
+        <div class="reminder-settings">
+          <h4>⚙️ Reminder Settings</h4>
+          <div style="margin: 15px 0;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+              <div>
+                <strong>📅 Donation Reminders</strong>
+                <p style="margin: 5px 0; color: #6b7280; font-size: 0.9rem;">Get notified when you're eligible to donate</p>
+              </div>
+              <div class="toggle-switch active" id="donation-reminder-toggle" onclick="toggleReminder('donation')"></div>
+            </div>
+            
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+              <div>
+                <strong>🚨 Urgent Blood Needs</strong>
+                <p style="margin: 5px 0; color: #6b7280; font-size: 0.9rem;">Alerts for your blood type emergencies</p>
+              </div>
+              <div class="toggle-switch active" id="urgent-reminder-toggle" onclick="toggleReminder('urgent')"></div>
+            </div>
+            
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <strong>🏆 Achievement Updates</strong>
+                <p style="margin: 5px 0; color: #6b7280; font-size: 0.9rem;">Celebrate your donation milestones</p>
+              </div>
+              <div class="toggle-switch active" id="achievement-reminder-toggle" onclick="toggleReminder('achievement')"></div>
+            </div>
+          </div>
+          
+          <button class="action-btn" onclick="testReminder()">🔔 Test Reminder</button>
+        </div>
       </div>
     </div>
 
@@ -314,7 +408,124 @@
       document.getElementById('profile-location').textContent = 'Maseru';
       document.getElementById('profile-member-since').textContent = 'Jan 2023';
       document.getElementById('profile-emergency').textContent = '+266 1234 5678';
+      
+      // Check and show reminder alerts
+      checkDonationReminders(daysUntilNext);
     }
+
+    function checkDonationReminders(daysUntil) {
+      const alertBanner = document.getElementById('reminder-alert');
+      const alertContent = document.getElementById('alert-content');
+      
+      if (daysUntil <= 0) {
+        // Eligible to donate NOW
+        alertBanner.className = 'alert-banner urgent';
+        alertContent.innerHTML = `
+          <h3>🎉 You're Eligible to Donate Today!</h3>
+          <div class="countdown-timer">NOW</div>
+          <p>Save lives by donating blood today!</p>
+          <button class="action-btn" onclick="scheduleDonation()">Schedule Donation</button>
+        `;
+        alertBanner.style.display = 'block';
+      } else if (daysUntil <= 3) {
+        // Very soon - urgent reminder
+        alertBanner.className = 'alert-banner urgent';
+        alertContent.innerHTML = `
+          <h3>🚨 Donation Coming Up Soon!</h3>
+          <div class="countdown-timer">${daysUntil} Days</div>
+          <p>Get ready to save lives in ${daysUntil} day${daysUntil > 1 ? 's' : ''}!</p>
+          <button class="action-btn" onclick="scheduleDonation()">Set Reminder</button>
+        `;
+        alertBanner.style.display = 'block';
+      } else if (daysUntil <= 7) {
+        // Soon - friendly reminder
+        alertBanner.className = 'alert-banner';
+        alertContent.innerHTML = `
+          <h3>📅 Donation Date Approaching</h3>
+          <div class="countdown-timer">${daysUntil} Days</div>
+          <p>You'll be eligible to donate in ${daysUntil} days!</p>
+        `;
+        alertBanner.style.display = 'block';
+      } else if (daysUntil <= 14) {
+        // Planning phase
+        alertBanner.className = 'alert-banner';
+        alertContent.innerHTML = `
+          <h3>📋 Plan Your Next Donation</h3>
+          <div class="countdown-timer">${daysUntil} Days</div>
+          <p>Mark your calendar for ${daysUntil} days from now!</p>
+        `;
+        alertBanner.style.display = 'block';
+      } else {
+        // Hide alert if more than 2 weeks away
+        alertBanner.style.display = 'none';
+      }
+    }
+
+    function toggleReminder(type) {
+      const toggle = document.getElementById(`${type}-reminder-toggle`);
+      toggle.classList.toggle('active');
+      
+      const isActive = toggle.classList.contains('active');
+      localStorage.setItem(`${type}-reminder-enabled`, isActive);
+      
+      // Show feedback
+      const status = isActive ? 'enabled' : 'disabled';
+      showNotification(`${type.charAt(0).toUpperCase() + type.slice(1)} reminders ${status}!`, 'info');
+    }
+
+    function testReminder() {
+      // Simulate different reminder types
+      const reminderTypes = [
+        { type: 'urgent', message: '🚨 URGENT: O+ blood needed at Maseru Hospital!', icon: '🚨' },
+        { type: 'donation', message: '📅 You are eligible to donate in 3 days!', icon: '📅' },
+        { type: 'achievement', message: '🏆 Congratulations! You\'ve reached Silver donor level!', icon: '🏆' }
+      ];
+      
+      const randomReminder = reminderTypes[Math.floor(Math.random() * reminderTypes.length)];
+      showNotification(randomReminder.message, randomReminder.type);
+    }
+
+    function showNotification(message, type = 'info') {
+      // Create a temporary notification
+      const notification = document.createElement('div');
+      notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        left: 20px;
+        background: ${type === 'urgent' ? '#fee2e2' : type === 'achievement' ? '#d1fae5' : '#fef3c7'};
+        border: 2px solid ${type === 'urgent' ? '#dc2626' : type === 'achievement' ? '#10b981' : '#f59e0b'};
+        border-radius: 12px;
+        padding: 15px;
+        z-index: 10000;
+        animation: slideIn 0.3s ease;
+        text-align: center;
+        font-weight: 600;
+      `;
+      notification.textContent = message;
+      
+      document.body.appendChild(notification);
+      
+      // Auto-remove after 5 seconds
+      setTimeout(() => {
+        notification.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => notification.remove(), 300);
+      }, 5000);
+    }
+
+    // Add slide animations
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes slideIn {
+        from { transform: translateY(-100%); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+      }
+      @keyframes slideOut {
+        from { transform: translateY(0); opacity: 1; }
+        to { transform: translateY(-100%); opacity: 0; }
+      }
+    `;
+    document.head.appendChild(style);
 
     function updateMobileDonors() {
       const donorsList = document.getElementById('donors-list');
@@ -511,6 +722,25 @@
     
     // Auto-refresh every 30 seconds
     setInterval(loadMobileData, 30000);
+    
+    // Check reminders every minute
+    setInterval(() => {
+      const daysUntil = 15; // This would come from actual data
+      checkDonationReminders(daysUntil);
+    }, 60000);
+    
+    // Initialize reminder settings from localStorage
+    document.addEventListener('DOMContentLoaded', () => {
+      ['donation', 'urgent', 'achievement'].forEach(type => {
+        const isEnabled = localStorage.getItem(`${type}-reminder-enabled`);
+        const toggle = document.getElementById(`${type}-reminder-toggle`);
+        if (toggle) {
+          if (isEnabled === 'false') {
+            toggle.classList.remove('active');
+          }
+        }
+      });
+    });
   </script>
 </body>
 </html>
