@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="auth-check.js"></script>
+  <script src="scroll-ui.js"></script>
   <style>
     /* Web Application Design System */
     :root {
@@ -524,196 +525,196 @@
     </div>
   </aside>
 
-  <!-- Main Content -->
-  <main class="app-main">
-    <div class="page-header">
-      <h1 class="page-title">Dashboard</h1>
-      <p class="page-subtitle">Welcome back! Here's what's happening with your blood bank today.</p>
-    </div>
-
-    <!-- Stats Grid -->
-    <div class="dashboard-grid">
-      <div class="stat-card">
-        <div class="stat-header">
-          <div class="stat-title">Total Donors</div>
-          <div class="stat-icon primary">👥</div>
-        </div>
-        <div class="stat-value">1,247</div>
-        <div class="stat-change positive">+12% from last month</div>
+    <!-- Main Content -->
+    <main class="app-main">
+      <div class="page-header">
+        <h1 class="page-title">Dashboard</h1>
+        <p class="page-subtitle">Welcome back! Here's what's happening with your blood bank today.</p>
       </div>
 
-      <div class="stat-card">
-        <div class="stat-header">
-          <div class="stat-title">Blood Units Available</div>
-          <div class="stat-icon success">🩸</div>
-        </div>
-        <div class="stat-value">856</div>
-        <div class="stat-change positive">+8% from last week</div>
-      </div>
-
-      <div class="stat-card">
-        <div class="stat-header">
-          <div class="stat-title">Active Requests</div>
-          <div class="stat-icon warning">📋</div>
-        </div>
-        <div class="stat-value">23</div>
-        <div class="stat-change negative">+3 urgent requests</div>
-      </div>
-
-      <div class="stat-card">
-        <div class="stat-header">
-          <div class="stat-title">Lives Saved</div>
-          <div class="stat-icon primary">❤️</div>
-        </div>
-        <div class="stat-value">3,742</div>
-        <div class="stat-change positive">+156 this month</div>
-      </div>
-    </div>
-
-    <!-- Recent Activity -->
-    <div class="content-card" style="margin-bottom: var(--spacing-lg);">
-      <div class="card-header">
-        <h2 class="card-title">Recent Activity</h2>
-        <div class="card-actions">
-          <button class="btn btn-secondary btn-sm">View All</button>
-        </div>
-      </div>
-      <div class="card-body">
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th>Activity</th>
-              <th>User</th>
-              <th>Type</th>
-              <th>Status</th>
-              <th>Time</th>
-            </tr>
-          </thead>
-          <tbody id="activity-table">
-            <tr>
-              <td>New donor registration</td>
-              <td>Sarah Johnson</td>
-              <td>Registration</td>
-              <td><span class="badge badge-success">Completed</span></td>
-              <td>2 minutes ago</td>
-            </tr>
-            <tr>
-              <td>Blood request received</td>
-              <td>Queen 'Mamohato Hospital</td>
-              <td>Request</td>
-              <td><span class="badge badge-warning">Pending</span></td>
-              <td>15 minutes ago</td>
-            </tr>
-            <tr>
-              <td>Blood donation completed</td>
-              <td>Michael Thabo</td>
-              <td>Donation</td>
-              <td><span class="badge badge-success">Completed</span></td>
-              <td>1 hour ago</td>
-            </tr>
-            <tr>
-              <td>Inventory updated</td>
-              <td>Maseru Blood Bank</td>
-              <td>Inventory</td>
-              <td><span class="badge badge-success">Updated</span></td>
-              <td>2 hours ago</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- Blood Inventory Overview -->
-    <div class="dashboard-grid">
-      <div class="content-card">
-        <div class="card-header">
-          <h2 class="card-title">Blood Inventory</h2>
-          <div class="card-actions">
-            <button class="btn btn-secondary btn-sm">Manage</button>
+      <!-- Stats Grid -->
+      <div class="dashboard-grid essential-content">
+        <div class="stat-card">
+          <div class="stat-header">
+            <div class="stat-title">Total Donors</div>
+            <div class="stat-icon primary">👥</div>
           </div>
+          <div class="stat-value">1,247</div>
+          <div class="stat-change positive">+12% from last month</div>
         </div>
-        <div class="card-body">
-          <div id="inventory-chart">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-md);">
-              <div style="text-align: center;">
-                <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary-color);">A+</div>
-                <div style="color: var(--text-secondary); font-size: 0.875rem;">145 units</div>
-              </div>
-              <div style="text-align: center;">
-                <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary-color);">A-</div>
-                <div style="color: var(--text-secondary); font-size: 0.875rem;">89 units</div>
-              </div>
-              <div style="text-align: center;">
-                <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary-color);">B+</div>
-                <div style="color: var(--text-secondary); font-size: 0.875rem;">167 units</div>
-              </div>
-              <div style="text-align: center;">
-                <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary-color);">B-</div>
-                <div style="color: var(--text-secondary); font-size: 0.875rem;">76 units</div>
-              </div>
-              <div style="text-align: center;">
-                <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary-color);">O+</div>
-                <div style="color: var(--text-secondary); font-size: 0.875rem;">234 units</div>
-              </div>
-              <div style="text-align: center;">
-                <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary-color);">O-</div>
-                <div style="color: var(--text-secondary); font-size: 0.875rem;">45 units</div>
-              </div>
-            </div>
+
+        <div class="stat-card">
+          <div class="stat-header">
+            <div class="stat-title">Blood Units Available</div>
+            <div class="stat-icon success">🩸</div>
           </div>
+          <div class="stat-value">856</div>
+          <div class="stat-change positive">+8% from last week</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-header">
+            <div class="stat-title">Active Requests</div>
+            <div class="stat-icon warning">📋</div>
+          </div>
+          <div class="stat-value">23</div>
+          <div class="stat-change negative">+3 urgent requests</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-header">
+            <div class="stat-title">Lives Saved</div>
+            <div class="stat-icon primary">❤️</div>
+          </div>
+          <div class="stat-value">3,742</div>
+          <div class="stat-change positive">+156 this month</div>
         </div>
       </div>
 
-      <div class="content-card">
+      <!-- Recent Activity -->
+      <div class="content-card essential-content" style="margin-bottom: var(--spacing-lg);">
         <div class="card-header">
-          <h2 class="card-title">Upcoming Appointments</h2>
+          <h2 class="card-title">Recent Activity</h2>
           <div class="card-actions">
             <button class="btn btn-secondary btn-sm">View All</button>
           </div>
         </div>
         <div class="card-body">
-          <div id="appointments-list">
-            <div style="padding: var(--spacing-md); border-bottom: 1px solid var(--border-color);">
-              <div style="display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                  <div style="font-weight: 600;">David Mokoena</div>
-                  <div style="color: var(--text-secondary); font-size: 0.875rem;">O+ Blood Type</div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Activity</th>
+                <th>User</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th>Time</th>
+              </tr>
+            </thead>
+            <tbody id="activity-table">
+              <tr>
+                <td>New donor registration</td>
+                <td>Sarah Johnson</td>
+                <td>Registration</td>
+                <td><span class="badge badge-success">Completed</span></td>
+                <td>2 minutes ago</td>
+              </tr>
+              <tr>
+                <td>Blood request received</td>
+                <td>Queen 'Mamohato Hospital</td>
+                <td>Request</td>
+                <td><span class="badge badge-warning">Pending</span></td>
+                <td>15 minutes ago</td>
+              </tr>
+              <tr>
+                <td>Blood donation completed</td>
+                <td>Michael Thabo</td>
+                <td>Donation</td>
+                <td><span class="badge badge-success">Completed</span></td>
+                <td>1 hour ago</td>
+              </tr>
+              <tr>
+                <td>Inventory updated</td>
+                <td>Maseru Blood Bank</td>
+                <td>Inventory</td>
+                <td><span class="badge badge-success">Updated</span></td>
+                <td>2 hours ago</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Blood Inventory Overview -->
+      <div class="dashboard-grid essential-content">
+        <div class="content-card">
+          <div class="card-header">
+            <h2 class="card-title">Blood Inventory</h2>
+            <div class="card-actions">
+              <button class="btn btn-secondary btn-sm">Manage</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div id="inventory-chart">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-md);">
+                <div style="text-align: center;">
+                  <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary-color);">A+</div>
+                  <div style="color: var(--text-secondary); font-size: 0.875rem;">145 units</div>
                 </div>
-                <div style="text-align: right;">
-                  <div style="font-weight: 600;">Today, 2:00 PM</div>
-                  <div style="color: var(--text-secondary); font-size: 0.875rem;">Maseru Blood Bank</div>
+                <div style="text-align: center;">
+                  <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary-color);">A-</div>
+                  <div style="color: var(--text-secondary); font-size: 0.875rem;">89 units</div>
+                </div>
+                <div style="text-align: center;">
+                  <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary-color);">B+</div>
+                  <div style="color: var(--text-secondary); font-size: 0.875rem;">167 units</div>
+                </div>
+                <div style="text-align: center;">
+                  <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary-color);">B-</div>
+                  <div style="color: var(--text-secondary); font-size: 0.875rem;">76 units</div>
+                </div>
+                <div style="text-align: center;">
+                  <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary-color);">O+</div>
+                  <div style="color: var(--text-secondary); font-size: 0.875rem;">234 units</div>
+                </div>
+                <div style="text-align: center;">
+                  <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary-color);">O-</div>
+                  <div style="color: var(--text-secondary); font-size: 0.875rem;">45 units</div>
                 </div>
               </div>
             </div>
-            <div style="padding: var(--spacing-md); border-bottom: 1px solid var(--border-color);">
-              <div style="display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                  <div style="font-weight: 600;">Emma Lerato</div>
-                  <div style="color: var(--text-secondary); font-size: 0.875rem;">A- Blood Type</div>
-                </div>
-                <div style="text-align: right;">
-                  <div style="font-weight: 600;">Tomorrow, 10:00 AM</div>
-                  <div style="color: var(--text-secondary); font-size: 0.875rem;">Queen Hospital</div>
+          </div>
+        </div>
+
+        <div class="content-card non-essential">
+          <div class="card-header">
+            <h2 class="card-title">Upcoming Appointments</h2>
+            <div class="card-actions">
+              <button class="btn btn-secondary btn-sm">View All</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div id="appointments-list">
+              <div style="padding: var(--spacing-md); border-bottom: 1px solid var(--border-color);">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <div>
+                    <div style="font-weight: 600;">David Mokoena</div>
+                    <div style="color: var(--text-secondary); font-size: 0.875rem;">O+ Blood Type</div>
+                  </div>
+                  <div style="text-align: right;">
+                    <div style="font-weight: 600;">Today, 2:00 PM</div>
+                    <div style="color: var(--text-secondary); font-size: 0.875rem;">Maseru Blood Bank</div>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div style="padding: var(--spacing-md);">
-              <div style="display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                  <div style="font-weight: 600;">James Kabelo</div>
-                  <div style="color: var(--text-secondary); font-size: 0.875rem;">B+ Blood Type</div>
+              <div style="padding: var(--spacing-md); border-bottom: 1px solid var(--border-color);">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <div>
+                    <div style="font-weight: 600;">Emma Lerato</div>
+                    <div style="color: var(--text-secondary); font-size: 0.875rem;">A- Blood Type</div>
+                  </div>
+                  <div style="text-align: right;">
+                    <div style="font-weight: 600;">Tomorrow, 10:00 AM</div>
+                    <div style="color: var(--text-secondary); font-size: 0.875rem;">Queen Hospital</div>
+                  </div>
                 </div>
-                <div style="text-align: right;">
-                  <div style="font-weight: 600;">Tomorrow, 3:30 PM</div>
-                  <div style="color: var(--text-secondary); font-size: 0.875rem;">Berea Clinic</div>
+              </div>
+              <div style="padding: var(--spacing-md);">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <div>
+                    <div style="font-weight: 600;">James Kabelo</div>
+                    <div style="color: var(--text-secondary); font-size: 0.875rem;">B+ Blood Type</div>
+                  </div>
+                  <div style="text-align: right;">
+                    <div style="font-weight: 600;">Tomorrow, 3:30 PM</div>
+                    <div style="color: var(--text-secondary); font-size: 0.875rem;">Berea Clinic</div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </main>
+    </main>
 
   <script>
     // Web Application JavaScript
