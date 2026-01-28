@@ -1,348 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blood Suite - Smart Blood Bank Management</title>
-  <link rel="stylesheet" href="styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blood Suite - Healthcare Management</title>
+<style>
+body { margin: 0; padding: 20px; font-family: Arial, sans-serif; background: #f8f9fa; }
+.container { max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; }
+h1 { color: #dc2626; text-align: center; margin-bottom: 30px; }
+.links { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
+.link-card { background: #f8f9fa; padding: 20px; border-radius: 6px; text-align: center; text-decoration: none; color: #333; border: 1px solid #ddd; }
+.link-card:hover { background: #dc2626; color: white; }
+.icon { font-size: 24px; margin-bottom: 10px; }
+</style>
 </head>
 <body>
-  <div id="app">
-    <nav class="navbar" id="navbar">
-      <div class="nav-brand">
-        <span class="logo-icon">🩸</span>
-        <span>Blood Suite</span>
-      </div>
-      <div class="nav-links" id="nav-links">
-        <a href="#" onclick="showPage('home')">Home</a>
-        <a href="#" onclick="showPage('dashboard')">Dashboard</a>
-        <a href="#" onclick="showPage('inventory')">Inventory</a>
-        <a href="#" onclick="showPage('requests')">Requests</a>
-        <a href="#" onclick="showPage('donors')">Donors</a>
-      </div>
-      <div class="nav-auth" id="nav-auth">
-        <button onclick="showPage('login')" class="btn btn-outline">Login</button>
-        <button onclick="showPage('register')" class="btn btn-primary">Register</button>
-      </div>
-    </nav>
-
-    <main id="main-content">
-      <!-- Home Page -->
-      <section id="page-home" class="page active">
-        <div class="hero">
-          <div class="hero-content">
-            <h1>Blood Suite</h1>
-            <p class="tagline">Smart Blood Bank & Donor Management System for Lesotho</p>
-            <p class="hero-desc">Connecting donors, hospitals, and blood banks to save lives through efficient blood management.</p>
-            <div class="hero-buttons">
-              <button onclick="showPage('register')" class="btn btn-primary btn-lg">Become a Donor</button>
-              <button onclick="showPage('dashboard')" class="btn btn-outline btn-lg">View Dashboard</button>
-            </div>
-          </div>
-        </div>
-
-        <section class="features">
-          <h2>Key Features</h2>
-          <div class="feature-grid">
-            <div class="feature-card">
-              <div class="feature-icon">📊</div>
-              <h3>Real-Time Tracking</h3>
-              <p>Monitor blood inventory and donor data in real-time across all locations.</p>
-            </div>
-            <div class="feature-card">
-              <div class="feature-icon">📱</div>
-              <h3>Mobile Access</h3>
-              <p>Access the system on any device with our mobile-optimized interface.</p>
-            </div>
-            <div class="feature-card">
-              <div class="feature-icon">🩸</div>
-              <h3>Blood Management</h3>
-              <p>Efficient blood inventory management with expiry tracking and alerts.</p>
-            </div>
-            <div class="feature-card">
-              <div class="feature-icon">🏥</div>
-              <h3>Hospital Integration</h3>
-              <p>Seamless integration with hospitals for blood requests and deliveries.</p>
-            </div>
-            <div class="feature-card">
-              <div class="feature-icon">📈</div>
-              <h3>Analytics Dashboard</h3>
-              <p>Comprehensive analytics and reporting for better decision making.</p>
-            </div>
-            <div class="feature-card">
-              <div class="feature-icon">🔔</div>
-              <h3>Smart Notifications</h3>
-              <p>Automated alerts for low stock, urgent requests, and donor eligibility.</p>
-            </div>
-          </div>
-        </section>
-
-        <section class="cta-section">
-          <div class="cta-content">
-            <h2>🔐 Secure Access Portal</h2>
-            <p>Please login to access the Blood Suite management system:</p>
-            <div class="cta-buttons">
-              <a href="/login.html" class="btn btn-primary btn-lg">� Login to System</a>
-            <div class="feature-card">
-              <div class="feature-icon">🔔</div>
-              <h3>Smart Alerts</h3>
-              <p>Automatic notifications to nearby donors when their blood type is urgently needed.</p>
-            </div>
-            <div class="feature-card">
-              <div class="feature-icon">🏥</div>
-              <h3>Hospital Dashboard</h3>
-              <p>Request, reserve, and verify blood units instantly with our hospital portal.</p>
-            </div>
-            <div class="feature-card">
-              <div class="feature-icon">📱</div>
-              <h3>Donor App</h3>
-              <p>Track your donation history, schedule appointments, and respond to emergencies.</p>
-            </div>
-            <div class="feature-card">
-              <div class="feature-icon">📈</div>
-              <h3>Analytics</h3>
-              <p>AI-powered demand forecasting and comprehensive reporting dashboards.</p>
-            </div>
-            <div class="feature-card">
-              <div class="feature-icon">🔒</div>
-              <h3>Secure & Reliable</h3>
-              <p>Role-based access control and encrypted data storage for maximum security.</p>
-            </div>
-          </div>
-        </section>
-
-        <section class="stats-section">
-          <h2>System Overview</h2>
-          <div class="stats-grid" id="home-stats">
-            <div class="stat-card">
-              <div class="stat-value" id="stat-donors">0</div>
-              <div class="stat-label">Registered Donors</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-value" id="stat-hospitals">0</div>
-              <div class="stat-label">Partner Hospitals</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-value" id="stat-units">0</div>
-              <div class="stat-label">Available Units</div>
-            </div>
-            <div class="stat-card urgent">
-              <div class="stat-value" id="stat-urgent">0</div>
-              <div class="stat-label">Urgent Requests</div>
-            </div>
-          </div>
-        </section>
-
-        <section class="blood-types">
-          <h2>Blood Type Availability</h2>
-          <div class="blood-grid" id="blood-type-grid"></div>
-        </section>
-      </section>
-
-      <!-- Dashboard Page -->
-      <section id="page-dashboard" class="page">
-        <div class="page-header">
-          <h1>Dashboard</h1>
-          <p>Real-time overview of blood bank operations</p>
-        </div>
-        <div class="dashboard-grid" id="dashboard-content">
-          <div class="dash-card">
-            <h3>Total Donors</h3>
-            <div class="dash-value" id="dash-donors">0</div>
-          </div>
-          <div class="dash-card">
-            <h3>Available Units</h3>
-            <div class="dash-value" id="dash-units">0</div>
-          </div>
-          <div class="dash-card">
-            <h3>Pending Requests</h3>
-            <div class="dash-value" id="dash-pending">0</div>
-          </div>
-          <div class="dash-card alert">
-            <h3>Urgent Requests</h3>
-            <div class="dash-value" id="dash-urgent">0</div>
-          </div>
-          <div class="dash-card warning">
-            <h3>Expiring Soon</h3>
-            <div class="dash-value" id="dash-expiring">0</div>
-          </div>
-          <div class="dash-card">
-            <h3>Recent Donations</h3>
-            <div class="dash-value" id="dash-donations">0</div>
-          </div>
-        </div>
-        <div class="chart-section">
-          <h3>Blood Type Stock Levels</h3>
-          <div class="blood-chart" id="blood-chart"></div>
-        </div>
-      </section>
-
-      <!-- Inventory Page -->
-      <section id="page-inventory" class="page">
-        <div class="page-header">
-          <h1>Blood Inventory</h1>
-          <p>Track and manage blood units across all locations</p>
-        </div>
-        <div class="inventory-summary" id="inventory-summary"></div>
-        <div class="inventory-table-container">
-          <table class="data-table" id="inventory-table">
-            <thead>
-              <tr>
-                <th>Blood Type</th>
-                <th>Available</th>
-                <th>Reserved</th>
-                <th>Expiring Soon</th>
-              </tr>
-            </thead>
-            <tbody id="inventory-tbody"></tbody>
-          </table>
-        </div>
-      </section>
-
-      <!-- Requests Page -->
-      <section id="page-requests" class="page">
-        <div class="page-header">
-          <h1>Blood Requests</h1>
-          <p>Manage blood requests from hospitals</p>
-        </div>
-        <div class="request-filters">
-          <select id="request-filter" onchange="filterRequests()">
-            <option value="">All Requests</option>
-            <option value="pending">Pending</option>
-            <option value="approved">Approved</option>
-            <option value="fulfilled">Fulfilled</option>
-          </select>
-        </div>
-        <div class="requests-list" id="requests-list">
-          <p class="empty-state">No requests found. Login to view requests.</p>
-        </div>
-      </section>
-
-      <!-- Donors Page -->
-      <section id="page-donors" class="page">
-        <div class="page-header">
-          <h1>Donor Management</h1>
-          <p>View and manage registered donors</p>
-        </div>
-        <div class="donor-stats" id="donor-stats"></div>
-        <div class="donor-filters">
-          <select id="blood-type-filter" onchange="filterDonors()">
-            <option value="">All Blood Types</option>
-            <option value="A+">A+</option>
-            <option value="A-">A-</option>
-            <option value="B+">B+</option>
-            <option value="B-">B-</option>
-            <option value="AB+">AB+</option>
-            <option value="AB-">AB-</option>
-            <option value="O+">O+</option>
-            <option value="O-">O-</option>
-          </select>
-        </div>
-        <div class="donors-grid" id="donors-grid">
-          <p class="empty-state">Login to view donor information.</p>
-        </div>
-      </section>
-
-      <!-- Login Page -->
-      <section id="page-login" class="page auth-page">
-        <div class="auth-container">
-          <h2>Login to Blood Suite</h2>
-          <form id="login-form" onsubmit="handleLogin(event)">
-            <div class="form-group">
-              <label for="login-email">Email</label>
-              <input type="email" id="login-email" required>
-            </div>
-            <div class="form-group">
-              <label for="login-password">Password</label>
-              <input type="password" id="login-password" required>
-            </div>
-            <button type="submit" class="btn btn-primary btn-full">Login</button>
-          </form>
-          <p class="auth-link">Don't have an account? <a href="#" onclick="showPage('register')">Register</a></p>
-        </div>
-      </section>
-
-      <!-- Register Page -->
-      <section id="page-register" class="page auth-page">
-        <div class="auth-container">
-          <h2>Register as Donor</h2>
-          <form id="register-form" onsubmit="handleRegister(event)">
-            <div class="form-row">
-              <div class="form-group">
-                <label for="reg-firstname">First Name</label>
-                <input type="text" id="reg-firstname" required>
-              </div>
-              <div class="form-group">
-                <label for="reg-lastname">Last Name</label>
-                <input type="text" id="reg-lastname" required>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="reg-email">Email</label>
-              <input type="email" id="reg-email" required>
-            </div>
-            <div class="form-group">
-              <label for="reg-phone">Phone</label>
-              <input type="tel" id="reg-phone">
-            </div>
-            <div class="form-group">
-              <label for="reg-password">Password</label>
-              <input type="password" id="reg-password" required minlength="6">
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label for="reg-bloodtype">Blood Type</label>
-                <select id="reg-bloodtype" required>
-                  <option value="">Select</option>
-                  <option value="A+">A+</option>
-                  <option value="A-">A-</option>
-                  <option value="B+">B+</option>
-                  <option value="B-">B-</option>
-                  <option value="AB+">AB+</option>
-                  <option value="AB-">AB-</option>
-                  <option value="O+">O+</option>
-                  <option value="O-">O-</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="reg-district">District</label>
-                <select id="reg-district" required>
-                  <option value="">Select</option>
-                  <option value="Maseru">Maseru</option>
-                  <option value="Berea">Berea</option>
-                  <option value="Leribe">Leribe</option>
-                  <option value="Butha-Buthe">Butha-Buthe</option>
-                  <option value="Mokhotlong">Mokhotlong</option>
-                  <option value="Thaba-Tseka">Thaba-Tseka</option>
-                  <option value="Qacha's Nek">Qacha's Nek</option>
-                  <option value="Quthing">Quthing</option>
-                  <option value="Mohale's Hoek">Mohale's Hoek</option>
-                  <option value="Mafeteng">Mafeteng</option>
-                </select>
-              </div>
-            </div>
-            <button type="submit" class="btn btn-primary btn-full">Register</button>
-          </form>
-          <p class="auth-link">Already have an account? <a href="#" onclick="showPage('login')">Login</a></p>
-        </div>
-      </section>
-    </main>
-
-    <footer>
-      <div class="footer-content">
-        <div class="footer-brand">
-          <span class="logo-icon">🩸</span>
-          <span>Blood Suite</span>
-        </div>
-        <p>Smart Blood Bank & Donor Management System</p>
-        <p class="copyright">Final Year Project - National University of Lesotho - 2025</p>
-      </div>
-    </footer>
-  </div>
-
-  <div id="toast" class="toast hidden"></div>
-
-  <script src="app.js"></script>
+<div class="container">
+<h1>🩸 Blood Suite</h1>
+<p style="text-align: center; color: #666; margin-bottom: 30px;">Healthcare Management System</p>
+<div class="links">
+<a href="/login.html" class="link-card">
+<span class="icon">🔐</span>
+<div><strong>Login</strong></div>
+<small>Sign in</small>
+</a>
+<a href="/register.html" class="link-card">
+<span class="icon">📝</span>
+<div><strong>Register</strong></div>
+<small>Create account</small>
+</a>
+<a href="/enterprise.html" class="link-card">
+<span class="icon">🏢</span>
+<div><strong>Enterprise</strong></div>
+<small>Admin dashboard</small>
+</a>
+<a href="/mobile-donor-app.html" class="link-card">
+<span class="icon">📱</span>
+<div><strong>Mobile</strong></div>
+<small>Donor app</small>
+</a>
+</div>
+</div>
 </body>
 </html>
