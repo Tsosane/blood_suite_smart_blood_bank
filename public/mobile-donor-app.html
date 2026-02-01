@@ -1,126 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Blood Donor App - Blood Suite</title>
-<style>
-body { margin: 0; padding: 0; font-family: Arial, sans-serif; background: #f8f9fa; }
-.mobile-app { max-width: 430px; margin: 0 auto; background: white; min-height: 100vh; }
-.header { background: #dc2626; color: white; padding: 20px; text-align: center; position: sticky; top: 0; }
-.content { padding: 20px; }
-.profile { background: linear-gradient(135deg, #dc2626, #b91c1c); color: white; padding: 30px 20px; margin: -20px -20px 20px -20px; }
-.profile-info { display: flex; align-items: center; gap: 15px; }
-.avatar { width: 60px; height: 60px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; }
-.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 20px; }
-.stat { text-align: center; background: rgba(255,255,255,0.1); padding: 10px; border-radius: 8px; }
-.card { background: white; padding: 20px; border-radius: 8px; margin-bottom: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-.emergency { background: #dc2626; color: white; padding: 20px; border-radius: 8px; margin-bottom: 15px; }
-.btn { background: #dc2626; color: white; padding: 12px 20px; border: none; border-radius: 4px; cursor: pointer; }
-.btn:hover { background: #b91c1c; }
-</style>
+<title>Mobile App - Blood Suite</title>
 </head>
 <body>
-<div class="mobile-app">
-<div class="header">
-<h1>🩸 Blood Suite</h1>
-</div>
-<div class="content">
-<div class="profile">
-<div class="profile-info">
-<div class="avatar" id="userAvatar">JD</div>
-<div>
-<h2 id="userName">John Doe</h2>
-<p id="userBloodType">🩸 O+ Blood Type</p>
-</div>
-</div>
-<div class="stats">
-<div class="stat">
-<div><strong>12</strong></div>
-<div>Donations</div>
-</div>
-<div class="stat">
-<div><strong>36</strong></div>
-<div>Lives Saved</div>
-</div>
-<div class="stat">
-<div><strong>Hero</strong></div>
-<div>Level</div>
-</div>
-</div>
-</div>
-
-<div class="emergency">
-<h3>🚨 Urgent: Blood Needed</h3>
-<p>O- blood type urgently needed at Queen Hospital</p>
-<button class="btn">Donate Now</button>
-</div>
-
-<div class="card">
+<h1>Blood Donor App</h1>
+<p>Welcome, John Doe</p>
+<p>Blood Type: O+</p>
+<p>Total Donations: 12</p>
+<p>Lives Saved: 36</p>
+<p>Level: Hero</p>
+<h3>Emergency Alert</h3>
+<p>Urgent: O- blood needed at Queen Hospital</p>
+<button onclick="alert('Donate Now')">Donate Now</button>
 <h3>Next Appointment</h3>
-<p>📅 Tomorrow, 2:00 PM</p>
-<p>🏥 Queen Hospital</p>
-<button class="btn">Show QR Code</button>
-</div>
-
-<div class="card">
-<h3>Eligibility Status</h3>
-<p>✅ You are eligible to donate</p>
-<p>Next eligible: Tomorrow</p>
-</div>
-
-<div class="card">
-<h3>Quick Actions</h3>
-<button class="btn" style="margin-right: 10px;">Schedule Donation</button>
-<button class="btn">Find Centers</button>
-</div>
-</div>
-</div>
-<script>
-// Load user data from localStorage
-window.addEventListener('load', function() {
-  const userName = localStorage.getItem('userName');
-  const userEmail = localStorage.getItem('userEmail');
-  const userBloodType = localStorage.getItem('userBloodType');
-  
-  if (userName) {
-    document.getElementById('userName').textContent = userName;
-    // Update avatar with initials
-    const initials = userName.split(' ').map(word => word[0]).join('').toUpperCase();
-    document.getElementById('userAvatar').textContent = initials;
-  }
-  
-  if (userBloodType) {
-    document.getElementById('userBloodType').textContent = '🩸 ' + userBloodType + ' Blood Type';
-  }
-  
-  // Check if user is logged in
-  if (!localStorage.getItem('isLoggedIn')) {
-    window.location.href = '/login.html';
-  }
-});
-
-// Button functionalities
-document.addEventListener('click', function(e) {
-  if (e.target.classList.contains('btn')) {
-    const buttonText = e.target.textContent;
-    
-    switch(buttonText) {
-      case 'Donate Now':
-        alert('Opening donation scheduling...');
-        break;
-      case 'Show QR Code':
-        alert('Generating QR code for check-in...');
-        break;
-      case 'Schedule Donation':
-        alert('Opening donation scheduler...');
-        break;
-      case 'Find Centers':
-        alert('Opening nearby blood centers...');
-        break;
-    }
-  }
-});
-</script>
+<p>Tomorrow, 2:00 PM - Queen Hospital</p>
+<button onclick="alert('QR Code')">Show QR Code</button>
+<p><a href="login.html">Logout</a></p>
 </body>
 </html>
