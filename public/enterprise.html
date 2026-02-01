@@ -19,6 +19,7 @@ body { margin: 0; padding: 0; font-family: Arial, sans-serif; background: #f8f9f
 <body>
 <div class="header">
 <h1>🩸 Blood Suite Enterprise Dashboard</h1>
+<p>Welcome, <span id="adminName">Administrator</span> | <a href="/login.html" style="color: white; text-decoration: none;">Logout</a></p>
 </div>
 <div class="container">
 <div class="stats">
@@ -58,5 +59,48 @@ body { margin: 0; padding: 0; font-family: Arial, sans-serif; background: #f8f9f
 </div>
 </div>
 </div>
+<script>
+// Load admin data from localStorage
+window.addEventListener('load', function() {
+  const userName = localStorage.getItem('userName');
+  const userEmail = localStorage.getItem('userEmail');
+  const userRole = localStorage.getItem('userRole');
+  
+  if (userName) {
+    document.getElementById('adminName').textContent = userName;
+  }
+  
+  // Check if user is logged in and has proper role
+  if (!localStorage.getItem('isLoggedIn')) {
+    window.location.href = '/login.html';
+  } else if (userRole === 'donor') {
+    alert('Access denied. Donors cannot access enterprise dashboard.');
+    window.location.href = '/mobile-donor-app.html';
+  }
+});
+
+// Add click handlers for dashboard cards
+document.addEventListener('click', function(e) {
+  const card = e.target.closest('.card');
+  if (card) {
+    const title = card.querySelector('h3').textContent;
+    
+    switch(title) {
+      case 'Recent Donations':
+        alert('Opening recent donations report...');
+        break;
+      case 'Blood Inventory':
+        alert('Opening blood inventory management...');
+        break;
+      case 'Upcoming Appointments':
+        alert('Opening appointments schedule...');
+        break;
+      case 'Emergency Requests':
+        alert('Opening emergency requests...');
+        break;
+    }
+  }
+});
+</script>
 </body>
 </html>

@@ -63,7 +63,35 @@ input, select { width: 100%; padding: 12px; border: 1px solid #ddd; border-radiu
 </div>
 </div>
 <script>
-function handleRegister(e) { e.preventDefault(); alert('Registration functionality would be implemented here'); }
+function handleRegister(e) {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  const name = e.target.querySelector('input[type="text"]').value;
+  const email = e.target.querySelector('input[type="email"]').value;
+  const password = e.target.querySelector('input[type="password"]').value;
+  const bloodType = e.target.querySelector('select').value;
+  const role = e.target.querySelectorAll('select')[1].value;
+  
+  if (name && email && password && bloodType && role) {
+    // Store user data in localStorage for demo
+    localStorage.setItem('userName', name);
+    localStorage.setItem('userEmail', email);
+    localStorage.setItem('userBloodType', bloodType);
+    localStorage.setItem('userRole', role);
+    localStorage.setItem('isLoggedIn', 'true');
+    
+    alert('Registration successful! Redirecting to your dashboard...');
+    
+    // Redirect based on role
+    if (role === 'admin' || role === 'hospital') {
+      window.location.href = '/enterprise.html';
+    } else {
+      window.location.href = '/mobile-donor-app.html';
+    }
+  } else {
+    alert('Please fill in all fields');
+  }
+}
 </script>
 </body>
 </html>

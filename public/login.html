@@ -36,7 +36,26 @@ input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; 
 </div>
 </div>
 <script>
-function handleLogin(e) { e.preventDefault(); alert('Login functionality would be implemented here'); }
+function handleLogin(e) {
+  e.preventDefault();
+  const email = e.target.querySelector('input[type="email"]').value;
+  const password = e.target.querySelector('input[type="password"]').value;
+  
+  if (email && password) {
+    // Store login info in localStorage for demo
+    localStorage.setItem('userEmail', email);
+    localStorage.setItem('isLoggedIn', 'true');
+    
+    // Redirect based on email domain (demo role detection)
+    if (email.includes('admin') || email.includes('hospital')) {
+      window.location.href = '/enterprise.html';
+    } else {
+      window.location.href = '/mobile-donor-app.html';
+    }
+  } else {
+    alert('Please enter email and password');
+  }
+}
 </script>
 </body>
 </html>

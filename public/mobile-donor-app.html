@@ -28,10 +28,10 @@ body { margin: 0; padding: 0; font-family: Arial, sans-serif; background: #f8f9f
 <div class="content">
 <div class="profile">
 <div class="profile-info">
-<div class="avatar">JD</div>
+<div class="avatar" id="userAvatar">JD</div>
 <div>
-<h2>John Doe</h2>
-<p>🩸 O+ Blood Type</p>
+<h2 id="userName">John Doe</h2>
+<p id="userBloodType">🩸 O+ Blood Type</p>
 </div>
 </div>
 <div class="stats">
@@ -76,5 +76,51 @@ body { margin: 0; padding: 0; font-family: Arial, sans-serif; background: #f8f9f
 </div>
 </div>
 </div>
+<script>
+// Load user data from localStorage
+window.addEventListener('load', function() {
+  const userName = localStorage.getItem('userName');
+  const userEmail = localStorage.getItem('userEmail');
+  const userBloodType = localStorage.getItem('userBloodType');
+  
+  if (userName) {
+    document.getElementById('userName').textContent = userName;
+    // Update avatar with initials
+    const initials = userName.split(' ').map(word => word[0]).join('').toUpperCase();
+    document.getElementById('userAvatar').textContent = initials;
+  }
+  
+  if (userBloodType) {
+    document.getElementById('userBloodType').textContent = '🩸 ' + userBloodType + ' Blood Type';
+  }
+  
+  // Check if user is logged in
+  if (!localStorage.getItem('isLoggedIn')) {
+    window.location.href = '/login.html';
+  }
+});
+
+// Button functionalities
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('btn')) {
+    const buttonText = e.target.textContent;
+    
+    switch(buttonText) {
+      case 'Donate Now':
+        alert('Opening donation scheduling...');
+        break;
+      case 'Show QR Code':
+        alert('Generating QR code for check-in...');
+        break;
+      case 'Schedule Donation':
+        alert('Opening donation scheduler...');
+        break;
+      case 'Find Centers':
+        alert('Opening nearby blood centers...');
+        break;
+    }
+  }
+});
+</script>
 </body>
 </html>
